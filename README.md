@@ -13,9 +13,7 @@ Template based on Material UI library of React UI components that implements Goo
 
 ### Quick start
 
-- [Download from Github](https://github.com/devias-io/material-kit-react/archive/master.zip)
-  or [Download from Devias](https://devias.io/products/material-kit-react) or clone the
-  repo: `git clone https://github.com/devias-io/material-kit-react.git`
+- Change directory to [Project_Location]\FrontEnd
 
 - Make sure your Node.js and npm versions are up to date for `React 18`
 
