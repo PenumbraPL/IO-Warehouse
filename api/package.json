@@ -1,0 +1,9 @@
+{
+  "name": "api",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
