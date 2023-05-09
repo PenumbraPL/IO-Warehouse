@@ -29,15 +29,6 @@ export const items = [
     )
   },
   {
-    title: 'Companies',
-    path: '/companies',
-    icon: (
-      <SvgIcon fontSize="small">
-        <ShoppingBagIcon />
-      </SvgIcon>
-    )
-  },
-  {
     title: 'Account',
     path: '/account',
     icon: (
@@ -52,6 +43,16 @@ export const items = [
     icon: (
       <SvgIcon fontSize="small">
         <CogIcon />
+      </SvgIcon>
+    )
+  },
+  {/*
+{
+    title: 'Companies',
+    path: '/companies',
+    icon: (
+      <SvgIcon fontSize="small">
+        <ShoppingBagIcon />
       </SvgIcon>
     )
   },
@@ -82,6 +83,7 @@ export const items = [
       </SvgIcon>
     )
   },
+*/},
   {
     title: 'Warehouse',
     path: '/warehouse',

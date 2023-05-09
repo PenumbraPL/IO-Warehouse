@@ -71,7 +71,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Login | Devias Kit
+          Login | Warehouse
         </title>
       </Head>
       <Box
@@ -123,10 +123,6 @@ const Page = () => {
               <Tab
                 label="Email"
                 value="email"
-              />
-              <Tab
-                label="Phone Number"
-                value="phoneNumber"
               />
             </Tabs>
             {method === 'email' && (
@@ -197,19 +193,6 @@ const Page = () => {
                   </div>
                 </Alert>
               </form>
-            )}
-            {method === 'phoneNumber' && (
-              <div>
-                <Typography
-                  sx={{ mb: 1 }}
-                  variant="h6"
-                >
-                  Not available in the demo
-                </Typography>
-                <Typography color="text.secondary">
-                  To prevent unnecessary costs we disabled this feature in the demo.
-                </Typography>
-              </div>
             )}
           </div>
         </Box>

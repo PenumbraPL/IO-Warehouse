@@ -3,6 +3,9 @@ import BellIcon from '@heroicons/react/24/solid/BellIcon';
 import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import Bars3Icon from '@heroicons/react/24/solid/Bars3Icon';
 import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
+import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
+import LockClosedIcon from '@heroicons/react/24/solid/LockClosedIcon';
+
 import {
   Avatar,
   Badge,
@@ -78,10 +81,17 @@ export const TopNav = (props) => {
             direction="row"
             spacing={2}
           >
-            <Tooltip title="Contacts">
-              <IconButton>
+            <Tooltip title="Login">
+              <IconButton href="/auth/login">
                 <SvgIcon fontSize="small">
-                  <UsersIcon />
+                  <LockClosedIcon />
+                </SvgIcon>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Register">
+              <IconButton href="/auth/register">
+                <SvgIcon fontSize="small">
+                  <UserPlusIcon />
                 </SvgIcon>
               </IconButton>
             </Tooltip>
