@@ -8,6 +8,8 @@ import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import TruckIcon from '@heroicons/react/24/solid/TruckIcon';
 import { SvgIcon } from '@mui/material';
+import CalendarIcon from '@heroicons/react/24/solid/CalendarDaysIcon';
+import FormIcon from '@heroicons/react/24/solid/DocumentArrowUpIcon';
 
 export const items = [
   {
@@ -19,6 +21,7 @@ export const items = [
       </SvgIcon>
     )
   },
+    {/*
   {
     title: 'Customers',
     path: '/customers',
@@ -28,25 +31,7 @@ export const items = [
       </SvgIcon>
     )
   },
-  {
-    title: 'Account',
-    path: '/account',
-    icon: (
-      <SvgIcon fontSize="small">
-        <UserIcon />
-      </SvgIcon>
-    )
-  },
-  {
-    title: 'Settings',
-    path: '/settings',
-    icon: (
-      <SvgIcon fontSize="small">
-        <CogIcon />
-      </SvgIcon>
-    )
-  },
-  {/*
+
 {
     title: 'Companies',
     path: '/companies',
@@ -90,6 +75,43 @@ export const items = [
     icon: (
       <SvgIcon fontSize="small">
         <TruckIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Calendar',
+    path: '/calendar',
+    icon: (
+      <SvgIcon fontSize="small">
+        <CalendarIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Form',
+    path: '/form',
+    icon: (
+      <SvgIcon fontSize="small">
+        <FormIcon />
+      </SvgIcon>
+    )
+  },
+  
+  {
+    title: 'Account',
+    path: '/account',
+    icon: (
+      <SvgIcon fontSize="small">
+        <UserIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Settings',
+    path: '/settings',
+    icon: (
+      <SvgIcon fontSize="small">
+        <CogIcon />
       </SvgIcon>
     )
   }
