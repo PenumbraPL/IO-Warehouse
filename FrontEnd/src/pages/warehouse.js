@@ -1,7 +1,19 @@
+import React, {useState} from 'react';
 import Head from 'next/head';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
+import AdjustIcon from '@heroicons/react/24/solid/AdjustmentsVerticalIcon'
+import ArrowUpLeftIcon from '@heroicons/react/24/solid/ArrowUpLeftIcon'
+import Bar3ListIcon from '@heroicons/react/24/solid/Bars3BottomLeftIcon'
+import PaletteIcon from '@heroicons/react/24/solid/InboxStackIcon'
+import ClockIcon from '@heroicons/react/24/solid/ClockIcon'
+import Popover from '@mui/material/Popover';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
 import {
   Box,
   Button,
@@ -14,7 +26,6 @@ import {
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import { CompaniesSearch } from 'src/sections/companies/companies-search';
 
 const itemData = [
   {
@@ -22,8 +33,32 @@ const itemData = [
     title: 'Warehouse-1',
   }
 ];
+  
 
-const Page = () => (
+const Page = () => {
+    
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+  
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  
+  
+
+    const [age, setAge] = React.useState('');
+  
+    const handleChange = (event) => {
+      setAge(event.target.value);
+    };
+
+  return (
+
   <>
     <Head>
       <title>
@@ -46,7 +81,7 @@ const Page = () => (
           >
             <Stack spacing={1}>
               <Typography variant="h4">
-                Warehouse Plans
+                Warehouse
               </Typography>
               <Stack
                 alignItems="center"
@@ -84,20 +119,19 @@ const Page = () => (
                 )}
                 variant="contained"
               >
-                Add
+                Add Rack
               </Button>
             </div>
           </Stack>
-          <CompaniesSearch />
    
           <Grid
             container
             spacing={3}
           >
             <Grid
-              xs={12}
+              xs={10}
               sm={6}
-              lg={3}
+              lg={6}
             >
               <ImageList sx={{ width: 1000, height: 900 }} cols={3} rowHeight={164}>
                 {itemData.map((item) => (
@@ -112,14 +146,155 @@ const Page = () => (
                 ))}
               </ImageList>
             </Grid>
+            <Grid
+              xs={0}
+              sm={3}
+              lg={3}
+            >
+              <Popover 
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              >
+
+                <Box
+                m={5}>
+              Move pallets.
+
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Id</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+
+                <TextField id="filled-basic" label="Amount of palettes" variant="filled" />
+
+                <InputLabel id="demo-simple-select-label">Current Position</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+
+                <InputLabel id="demo-simple-select-label">New Position</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+
+                <Button variant="contained" href="#contained-buttons">
+                  Link
+                </Button>
+
+                </Box>
+              </Popover>
+
+
+
+
+            </Grid>
+            <Grid
+              xs={2}
+              sm={3}
+              lg={3}
+            >
+              <Stack
+                direction="column"
+                spacing={2}>
+                  <Button
+                    startIcon={(
+                      <SvgIcon fontSize="small">
+                        <AdjustIcon />
+                      </SvgIcon>
+                    )}
+                    variant="contained"
+                  >
+                    Manage Items
+                  </Button>
+
+                  <Button
+                    startIcon={(
+                      <SvgIcon fontSize="small">
+                        <ArrowUpLeftIcon />
+                      </SvgIcon>
+                    )}
+                    aria-describedby={id} variant="contained" onClick={handleClick}
+                  >
+                    Move Item
+                  </Button>
+
+                  <Button
+                    startIcon={(
+                      <SvgIcon fontSize="small">
+                        <Bar3ListIcon />
+                      </SvgIcon>
+                    )}
+                    variant="contained"
+                  >
+                  Rack List
+                  </Button>
+
+                  <Button
+                    startIcon={(
+                      <SvgIcon fontSize="small">
+                        <PaletteIcon />
+                      </SvgIcon>
+                    )}
+                    variant="contained"
+                  >
+                    Palettes
+                  </Button>
+
+                  <Button
+                    startIcon={(
+                      <SvgIcon fontSize="small">
+                        <ClockIcon />
+                      </SvgIcon>
+                    )}
+                    variant="contained"
+                  >
+                    Short Self Life Products
+                  </Button>
+              </Stack>
+            </Grid>
           </Grid>
-
-
         </Stack>
       </Container>
     </Box>
   </>
-);
+)
+                    };
 
 Page.getLayout = (page) => (
   <DashboardLayout>
