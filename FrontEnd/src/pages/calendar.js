@@ -16,7 +16,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { CompaniesSearch } from 'src/sections/companies/companies-search';
 
-//import { DateCalendar } from '@mui/x-date-picker/DateCalendar';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 const itemData = [
   {
@@ -77,21 +77,9 @@ const Page = () => (
                 </Button>
               </Stack>
             </Stack>
-            <div>
-              <Button
-                startIcon={(
-                  <SvgIcon fontSize="small">
-                    <PlusIcon />
-                  </SvgIcon>
-                )}
-                variant="contained"
-              >
-                Add
-              </Button>
-            </div>
+            
           </Stack>
-          <CompaniesSearch />
-   
+  
           <Grid
             container
             spacing={3}
@@ -99,7 +87,7 @@ const Page = () => (
             <Grid
               xs={12}
               sm={6}
-              lg={3}
+              lg={12}
             >
                    <DateCalendar />
             </Grid>
