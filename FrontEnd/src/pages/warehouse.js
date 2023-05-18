@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
+
 import {
   Box,
   Button,
@@ -171,6 +172,9 @@ const Page = () => {
               Move pallets.
 
               <FormControl fullWidth>
+              <Stack
+                spacing = {1} mb={1}
+                >
                 <InputLabel id="demo-simple-select-label">Id</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -186,10 +190,10 @@ const Page = () => {
 
                 <TextField id="filled-basic" label="Amount of palettes" variant="filled" />
 
-                <InputLabel id="demo-simple-select-label">Current Position</InputLabel>
+                <InputLabel id="demo-simple-select-label2">Current Position</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="demo-simple-select-label2"
+                  id="demo-simple-select2"
                   value={age}
                   label="Age"
                   onChange={handleChange}
@@ -199,10 +203,10 @@ const Page = () => {
                   <MenuItem value={30}>Thirty</MenuItem>
                 </Select>
 
-                <InputLabel id="demo-simple-select-label">New Position</InputLabel>
+                <InputLabel id="demo-simple-select-label3">New Position</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="demo-simple-select-label3"
+                  id="demo-simple-select3"
                   value={age}
                   label="Age"
                   onChange={handleChange}
@@ -211,12 +215,12 @@ const Page = () => {
                   <MenuItem value={20}>Twenty</MenuItem>
                   <MenuItem value={30}>Thirty</MenuItem>
                 </Select>
+                </Stack>
               </FormControl>
 
                 <Button variant="contained" href="#contained-buttons">
-                  Link
+                  Send
                 </Button>
-
                 </Box>
               </Popover>
 

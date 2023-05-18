@@ -22,7 +22,7 @@ import { Layout as AuthLayout } from 'src/layouts/auth/layout';
 const Page = () => {
   const router = useRouter();
   const auth = useAuth();
-  const [method, setMethod] = useState('email');
+  const [method, setMethod] = useState('employee');
   const formik = useFormik({
     initialValues: {
       email: 'demo@devias.io',
@@ -121,11 +121,86 @@ const Page = () => {
               value={method}
             >
               <Tab
-                label="Email"
-                value="email"
+                label="Employee"
+                value="employee"
+              />
+              <Tab
+                label="Administrator"
+                value="admin"
               />
             </Tabs>
-            {method === 'email' && (
+            {method === 'employee' && (
+              <form
+                noValidate
+                onSubmit={formik.handleSubmit}
+              >
+                <Stack spacing={3}>
+                  <TextField
+                    error={!!(formik.touched.email && formik.errors.email)}
+                    fullWidth
+                    helperText={formik.touched.email && formik.errors.email}
+                    label="Email Address"
+                    name="email"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    type="email"
+                    value={formik.values.email}
+                  />
+                  <TextField
+                    error={!!(formik.touched.password && formik.errors.password)}
+                    fullWidth
+                    helperText={formik.touched.password && formik.errors.password}
+                    label="Password"
+                    name="password"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    type="password"
+                    value={formik.values.password}
+                  />
+                </Stack>
+                <FormHelperText sx={{ mt: 1 }}>
+                  Optionally you can skip.
+                </FormHelperText>
+                {formik.errors.submit && (
+                  <Typography
+                    color="error"
+                    sx={{ mt: 3 }}
+                    variant="body2"
+                  >
+                    {formik.errors.submit}
+                  </Typography>
+                )}
+                <Button
+                  fullWidth
+                  size="large"
+                  sx={{ mt: 3 }}
+                  type="submit"
+                  variant="contained"
+                >
+                  Continue
+                </Button>
+                <Button
+                  fullWidth
+                  size="large"
+                  sx={{ mt: 3 }}
+                  onClick={handleSkip}
+                >
+                  Skip authentication
+                </Button>
+                <Alert
+                  color="primary"
+                  severity="info"
+                  sx={{ mt: 3 }}
+                >
+                  <div>
+                    You can use <b>demo@devias.io</b> and password <b>Password123!</b>
+                  </div>
+                </Alert>
+              </form>
+            )}
+            
+{/* Dostowsowac */}
+            {method === 'admin' && (
               <form
                 noValidate
                 onSubmit={formik.handleSubmit}

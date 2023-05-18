@@ -11,18 +11,8 @@ import { SvgIcon } from '@mui/material';
 import CalendarIcon from '@heroicons/react/24/solid/CalendarDaysIcon';
 import FormIcon from '@heroicons/react/24/solid/DocumentArrowUpIcon';
 
-export const items = [
-  {
-    title: 'Overview',
-    path: '/',
-    icon: (
-      <SvgIcon fontSize="small">
-        <ChartBarIcon />
-      </SvgIcon>
-    )
-  },
-    {/*
-  {
+   {/*
+      {
     title: 'Customers',
     path: '/customers',
     icon: (
@@ -31,7 +21,6 @@ export const items = [
       </SvgIcon>
     )
   },
-
 {
     title: 'Companies',
     path: '/companies',
@@ -68,7 +57,18 @@ export const items = [
       </SvgIcon>
     )
   },
-*/},
+*/}
+
+export const items = [
+  {
+    title: 'Overview',
+    path: '/',
+    icon: (
+      <SvgIcon fontSize="small">
+        <ChartBarIcon />
+      </SvgIcon>
+    )
+  },
   {
     title: 'Warehouse',
     path: '/warehouse',
@@ -96,7 +96,33 @@ export const items = [
       </SvgIcon>
     )
   },
-  
+  {
+    title: 'Racks',
+    path: '/racks',
+    icon: (
+      <SvgIcon fontSize="small">
+        <FormIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Short Term Products',
+    path: '/short_term_prods',
+    icon: (
+      <SvgIcon fontSize="small">
+        <FormIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Palettes',
+    path: '/palettes',
+    icon: (
+      <SvgIcon fontSize="small">
+        <FormIcon />
+      </SvgIcon>
+    )
+  },
   {
     title: 'Account',
     path: '/account',
@@ -114,5 +140,41 @@ export const items = [
         <CogIcon />
       </SvgIcon>
     )
-  }
+  },
+  {
+    title: 'Admin-index',
+    path: '/admin',
+    icon: (
+      <SvgIcon fontSize="small">
+        <UserIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Admin-calendar',
+    path: '/admin/calendar',
+    icon: (
+      <SvgIcon fontSize="small">
+        <UserIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Admin-Employees',
+    path: '/admin/employees',
+    icon: (
+      <SvgIcon fontSize="small">
+        <UsersIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Admin-Employees-App',
+    path: '/admin/empl_app',
+    icon: (
+      <SvgIcon fontSize="small">
+        <UsersIcon />
+      </SvgIcon>
+    )
+  },
 ];
