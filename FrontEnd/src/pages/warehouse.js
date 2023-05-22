@@ -37,7 +37,6 @@ const itemData = [
   
 
 const Page = () => {
-    
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;

@@ -19,7 +19,7 @@ import {
   Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
-import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
+import { Layout as DashboardLayout } from 'src/layouts/dashboard/ad-layout';
 
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 

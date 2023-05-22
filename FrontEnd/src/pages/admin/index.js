@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { Box, Container, Unstable_Grid2 as Grid } from '@mui/material';
-import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
+import { Layout as DashboardLayout } from 'src/layouts/dashboard/ad-layout';
 import { OverviewBudget } from 'src/sections/overview/overview-budget';
 import { OverviewSales } from 'src/sections/overview/overview-sales';
 import { OverviewTasksProgress } from 'src/sections/overview/overview-tasks-progress';
