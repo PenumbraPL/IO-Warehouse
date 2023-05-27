@@ -50,11 +50,13 @@ const Page = () => (
             lg={4}
             >
             <Card >
-              <CardActionArea>
+              <CardActionArea
+                href="/admin/calendar"
+              >
                 <CardMedia
                   component="img"
                   height="140"
-                  image="/static/images/cards/contemplative-reptile.jpg"
+                  image="\assets\cards\istockphoto-1307098713.jpg"
                   alt="green iguana"
                 />
                 <CardContent>
@@ -75,11 +77,13 @@ const Page = () => (
             lg={4}
             >
             <Card >
-              <CardActionArea>
+              <CardActionArea
+               href="/admin/employees" 
+              >
                 <CardMedia
                   component="img"
                   height="140"
-                  image="/static/images/cards/contemplative-reptile.jpg"
+                  image="\assets\cards\istockphoto-1309080507.jpg"
                   alt="green iguana"
                 />
                 <CardContent>
@@ -99,11 +103,13 @@ const Page = () => (
             lg={4}
             >
             <Card >
-              <CardActionArea>
+              <CardActionArea
+                href="/admin/empl_app"
+              >
                 <CardMedia
                   component="img"
                   height="140"
-                  image="/static/images/cards/contemplative-reptile.jpg"
+                  image="\assets\cards\istockphoto-1217019016.jpg"
                   alt="green iguana"
                 />
                 <CardContent>

@@ -264,6 +264,7 @@ const Page = () => {
                       </SvgIcon>
                     )}
                     variant="contained"
+                    href="/racks"
                   >
                   Rack List
                   </Button>
@@ -275,6 +276,7 @@ const Page = () => {
                       </SvgIcon>
                     )}
                     variant="contained"
+                    href="/palettes"
                   >
                     Palettes
                   </Button>
@@ -286,6 +288,7 @@ const Page = () => {
                       </SvgIcon>
                     )}
                     variant="contained"
+                    href="/short_term_prods"
                   >
                     Short Self Life Products
                   </Button>

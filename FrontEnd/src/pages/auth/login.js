@@ -23,6 +23,7 @@ const Page = () => {
   const router = useRouter();
   const auth = useAuth();
   const [method, setMethod] = useState('employee');
+  const [isadmin, setAdminAuth] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: 'demo@devias.io',
@@ -42,9 +43,13 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await auth.signIn(values.email, values.password);
-        //signInAdmin
-        router.push('/');
+        if(isadmin){
+          await auth.signInAdmin(values.email, values.password);
+          router.push('/admin/overview');
+        } else{
+          await auth.signIn(values.email, values.password);
+          router.push('/');
+        }
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -56,6 +61,10 @@ const Page = () => {
   const handleMethodChange = useCallback(
     (event, value) => {
       setMethod(value);
+      if(value === 'admin')
+        setAdminAuth(true);
+      else if(value === 'employee')
+        setAdminAuth(false);
     },
     []
   );
@@ -200,7 +209,6 @@ const Page = () => {
               </form>
             )}
             
-{/* Dostowsowac */}
             {method === 'admin' && (
               <form
                 noValidate
@@ -230,9 +238,7 @@ const Page = () => {
                     value={formik.values.password}
                   />
                 </Stack>
-                <FormHelperText sx={{ mt: 1 }}>
-                  Optionally you can skip.
-                </FormHelperText>
+
                 {formik.errors.submit && (
                   <Typography
                     color="error"
@@ -251,7 +257,7 @@ const Page = () => {
                 >
                   Continue
                 </Button>
-                <Button
+                {/* <Button
                   fullWidth
                   size="large"
                   sx={{ mt: 3 }}
@@ -267,7 +273,7 @@ const Page = () => {
                   <div>
                     You can use <b>demo@devias.io</b> and password <b>Password123!</b>
                   </div>
-                </Alert>
+                </Alert> */}
               </form>
             )}
           </div>

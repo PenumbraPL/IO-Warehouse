@@ -5,13 +5,11 @@ const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
   SIGN_IN: 'SIGN_IN',
   SIGN_OUT: 'SIGN_OUT',
-  ADMIN: 'ADMIN'
 };
 
 const initialState = {
   isAuthenticated: false,
   isLoading: true,
-  isAdmin: false,
   user: null
 };
 
@@ -50,7 +48,6 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: true,
-      isAdmin: true,
       user
     };
   },
@@ -140,6 +137,27 @@ export const AuthProvider = (props) => {
   };
 
   const signIn = async (email, password) => {
+  //   fetch('http://localhost:3001/admin/sign-in', { // backend address
+  //       method: 'POST',
+  //       body: JSON.stringify({email, password}),
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //   })
+  // .then((response) => {
+  //     console.log(response.status)
+  //     response.json()
+  //       .then((user) => {
+  //         localStorage.user = JSON.stringify({ // localStorage ??? (sessionStorage)
+  //           id: user.id,
+  //           avatar: user.avatar,
+  //           name: user.name,
+  //           email: user.email,
+  //           authorization: 'Basic ' + window.btoa(email + ":" + password)
+  //         })
+  //       }).catch(err=>console.log(err))
+  // });
+    
     if (email !== 'demo@devias.io' || password !== 'Password123!') {
       throw new Error('Please check your email and password');
     }
@@ -163,8 +181,30 @@ export const AuthProvider = (props) => {
     });
   };
 
-// zamiast zwyklego admin??
   const signInAdmin = async (email, password) => {
+
+  //   fetch('http://localhost:3001/admin/sign-in', { // backend address
+  //       method: 'POST',
+  //       body: JSON.stringify({email, password}),
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //   })
+  // .then((response) => {
+  //     console.log(response.status)
+  //     response.json()
+  //       .then((user) => {
+  //         localStorage.user = JSON.stringify({ // localStorage ??? (sessionStorage)
+  //           id: user.id,
+  //           avatar: user.avatar,
+  //           name: user.name,
+  //           email: user.email,
+  //           authorization: 'Basic ' + window.btoa(email + ":" + password)
+  //         })
+  //       }).catch(err=>console.log(err))
+  // });
+    
+  // authentykacja po stronie serwera
     if (email !== 'demo@devias.io' || password !== 'Password123!') {
       throw new Error('Please check your email and password');
     }
@@ -175,20 +215,15 @@ export const AuthProvider = (props) => {
       console.error(err);
     }
 
+    // przypisanie z odpowiedzi z serwera
     const user = {
       id: '5e86809283e28b96d2d38537',
       avatar: '/assets/avatars/avatar-anika-visser.png',
       name: 'Anika Visser',
       email: 'anika.visser@devias.io'
-    };
-
-    if(isAdmin){
-      return dispatch({
-        type: HANDLERS.SIGN_IN_ADMIN,
-        payload: user
-      });
     }
-    
+
+   
     dispatch({
       type: HANDLERS.SIGN_IN,
       payload: user
@@ -196,6 +231,27 @@ export const AuthProvider = (props) => {
   };
 
   const signUp = async (email, name, password) => {
+    
+    // const data = {
+    //     name: name,
+    //     email: email,
+    //     password: password
+    // };
+
+    // fetch('http://localhost:3001/sign-up', {
+    //   method: 'POST',
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //           'Content-Type': 'application/json'
+    //         }
+    //   }).then((response) => {
+    //         if (response.value === 200)
+    //           statusMessage.value = 'Sign up successful'
+    //         else
+    //           statusMessage.value = `Sign up unsuccessful - ${response.message}`
+    //         console.log(response.status)
+    //   });
+    
     throw new Error('Sign up is not implemented');
   };
 

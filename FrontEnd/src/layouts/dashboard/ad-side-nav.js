@@ -45,7 +45,7 @@ export const SideNav = (props) => {
         <Box sx={{ p: 3 }}>
           <Box
             component={NextLink}
-            href="/"
+            href="/admin/overview"
             sx={{
               display: 'inline-flex',
               height: 32,
