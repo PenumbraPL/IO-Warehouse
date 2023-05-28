@@ -15,7 +15,7 @@ import FormIcon from '@heroicons/react/24/solid/DocumentArrowUpIcon';
 export const items = [
   {
     title: 'Overview',
-    path: '/admin',
+    path: '/admin/overview',
     icon: (
       <SvgIcon fontSize="small">
         <UserIcon />

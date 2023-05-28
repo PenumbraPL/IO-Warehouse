@@ -13,9 +13,16 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 
+import { useAuth } from 'src/hooks/use-auth';
+
+
 const now = new Date();
 
-const Page = () => (
+const Page = () => {
+  const auth = useAuth();
+  const user = auth.user;
+
+  return (
   <>
     <Head>
       <title>
@@ -36,7 +43,7 @@ const Page = () => (
             lg={3}
             >
             <Typography variant="h2" component="h2">
-              Good morning, Name Surname
+              Good morning, {user ? user.name : "" }
             </Typography>
           </Grid>
         
@@ -207,7 +214,8 @@ const Page = () => (
       </Container>
     </Box>
   </>
-);
+    );
+};
 
 Page.getLayout = (page) => (
   <DashboardLayout>
