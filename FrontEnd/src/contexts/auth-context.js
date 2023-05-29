@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
   SIGN_IN: 'SIGN_IN',
+  SIGN_IN_ADMIN: 'SIGN_IN_ADMIN',
   SIGN_OUT: 'SIGN_OUT',
 };
 
@@ -137,7 +138,7 @@ export const AuthProvider = (props) => {
   };
 
   const signIn = async (email, password) => {
-  //   fetch('http://localhost:3001/admin/sign-in', { // backend address
+  //   fetch('http://localhost:3001/sign-in', { // backend address
   //       method: 'POST',
   //       body: JSON.stringify({email, password}),
   //       headers: {
@@ -225,22 +226,22 @@ export const AuthProvider = (props) => {
 
    
     dispatch({
-      type: HANDLERS.SIGN_IN,
+      type: HANDLERS.SIGN_IN_ADMIN,
       payload: user
     });
   };
 
   const signUp = async (email, name, password) => {
     
-    // const data = {
+    // const signUpData = {
     //     name: name,
     //     email: email,
     //     password: password
     // };
 
-    // fetch('http://localhost:3001/sign-up', {
+    // fetch('http://localhost:3001/sign-up', { // backend address
     //   method: 'POST',
-    //   body: JSON.stringify(data),
+    //   body: JSON.stringify(signUpData),
     //   headers: {
     //           'Content-Type': 'application/json'
     //         }

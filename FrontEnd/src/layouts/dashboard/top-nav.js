@@ -30,6 +30,7 @@ export const TopNav = (props) => {
   const { onNavOpen } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const accountPopover = usePopover();
+  const notificationsPopover = usePopover();
   const auth = useAuth();
   const user = auth.user;
 
@@ -73,13 +74,7 @@ export const TopNav = (props) => {
                 </SvgIcon>
               </IconButton>
             )}
-            <Tooltip title="Search">
-              <IconButton>
-                <SvgIcon fontSize="small">
-                  <MagnifyingGlassIcon />
-                </SvgIcon>
-              </IconButton>
-            </Tooltip>
+
           </Stack>
           <Stack
             alignItems="center"
@@ -101,7 +96,9 @@ export const TopNav = (props) => {
               </IconButton>
             </Tooltip>
             <Tooltip title="Notifications">
-              <IconButton>
+              <IconButton
+              onClick={notificationsPopover.handleOpen}
+              ref={notificationsPopover.anchorRef}>
                 <Badge
                   badgeContent={4}
                   color="success"
@@ -130,6 +127,11 @@ export const TopNav = (props) => {
         anchorEl={accountPopover.anchorRef.current}
         open={accountPopover.open}
         onClose={accountPopover.handleClose}
+      />
+      <AccountPopover
+        anchorEl={notificationsPopover.anchorRef.current}
+        open={notificationsPopover.open}
+        onClose={notificationsPopover.handleClose}
       />
     </>
   );

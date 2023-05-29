@@ -42,8 +42,8 @@ const Page = () => {
             sm={6}
             lg={3}
             >
-            <Typography variant="h2" component="h2">
-              Good morning, { user ? user.name : ""}
+            <Typography variant="h2" component="h2" margin={5}>
+              Welcome, { user ? user.name : ""}
             </Typography>
           </Grid>
         
@@ -132,7 +132,7 @@ const Page = () => {
             </Grid>
           </Grid>
 
-        <Grid
+        {/* <Grid
           container
           spacing={3}
         >
@@ -210,7 +210,7 @@ const Page = () => {
               sx={{ height: '100%' }}
             />
           </Grid>          
-        </Grid>
+        </Grid> */}
       </Container>
     </Box>
   </>

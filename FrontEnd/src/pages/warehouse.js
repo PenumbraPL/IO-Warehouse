@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Head from 'next/head';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
@@ -34,7 +34,10 @@ const itemData = [
     title: 'Warehouse-1',
   }
 ];
-  
+// {/assets/products/product-1.png
+//   img: '/assets/plans/wh1.png',
+//   title: 'Warehouse-1',
+// }
 
 const Page = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -49,13 +52,48 @@ const Page = () => {
     setAnchorEl(null);
   };
   
-  
-
     const [age, setAge] = React.useState('');
   
     const handleChange = (event) => {
       setAge(event.target.value);
     };
+
+    const [anchorE2, setAnchorE2] = React.useState(null);
+    const open2 = Boolean(anchorE2);
+    const id2 = open2 ? 'simple-popover' : undefined;
+    const [section, setSection] = React.useState(0);
+    
+    const handleClick2 = (event) => {
+      setAnchorE2(event.currentTarget);
+    };
+    
+    const handleClose2 = () => {
+      setAnchorE2(null);
+    };
+    const handleChange2 = (event) => {
+      setSection(event.target.value);
+    };
+
+    const canvWidth = 700;
+    const canvHeight = 500;
+    const imgRef = useRef();
+    const canvasRef = useRef();
+
+    const drawRectangle = () => {
+      const context = canvasRef.current.getContext("2d");
+      context.drawImage(imgRef.current, 0, 0, canvWidth, canvHeight)
+
+      context.strokeStyle = "red";
+      context.lineWidth = 2;
+      context.strokeRect(50, 30, 110, 90);
+      context.strokeRect(170, 65, 100, 80);
+
+    };
+
+
+    useEffect(() => {
+      drawRectangle();
+    }, []);
 
   return (
 
@@ -112,6 +150,7 @@ const Page = () => {
             </Stack>
             <div>
               <Button
+                onClick={handleClick2}
                 startIcon={(
                   <SvgIcon fontSize="small">
                     <PlusIcon />
@@ -136,92 +175,34 @@ const Page = () => {
               <ImageList sx={{ width: 1000, height: 900 }} cols={3} rowHeight={164}>
                 {itemData.map((item) => (
                   <ImageListItem key={item.img}>
-                    <img
-                      src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                      srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                      alt={item.title}
-                      loading="lazy"
-                    />
+                    <div>
+                      <canvas 
+                        ref={canvasRef}  
+                        width={canvWidth}
+                        height={canvHeight}
+                      />                 
+                      <img
+                        ref={imgRef}
+                        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        alt={item.title}
+                        loading="lazy"
+                        hidden
+                      />
+                    </div>
+                   
+
                   </ImageListItem>
                 ))}
               </ImageList>
+
             </Grid>
             <Grid
               xs={0}
               sm={3}
               lg={3}
             >
-              <Popover 
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              >
-
-                <Box
-                m={5}>
-              Move pallets.
-
-              <FormControl fullWidth>
-              <Stack
-                spacing = {1} mb={1}
-                >
-                <InputLabel id="demo-simple-select-label">Id</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={age}
-                  label="Age"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-
-                <TextField id="filled-basic" label="Amount of palettes" variant="filled" />
-
-                <InputLabel id="demo-simple-select-label2">Current Position</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label2"
-                  id="demo-simple-select2"
-                  value={age}
-                  label="Age"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-
-                <InputLabel id="demo-simple-select-label3">New Position</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label3"
-                  id="demo-simple-select3"
-                  value={age}
-                  label="Age"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-                </Stack>
-              </FormControl>
-
-                <Button variant="contained" href="#contained-buttons">
-                  Send
-                </Button>
-                </Box>
-              </Popover>
+             
 
 
 
@@ -298,6 +279,133 @@ const Page = () => {
         </Stack>
       </Container>
     </Box>
+
+
+    <Popover 
+      id={id2}
+      open={open2}
+      anchorEl={anchorE2}
+      onClose={handleClose2}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      >
+
+        <Box
+        m={5}>
+        Add/Delete racks
+
+      <FormControl fullWidth>
+      <Stack
+        spacing = {1} mb={1}
+        >
+        <InputLabel id="demo-simple-select-label3">Section</InputLabel>
+        <Select
+          labelId="demo-simple-select-label3"
+          id="demo-simple-select3"
+          value={section}
+          label="Section"
+          onChange={handleChange2}
+        >
+          <MenuItem value={1}>S1</MenuItem>
+          <MenuItem value={2}>S2</MenuItem>
+          <MenuItem value={3}>S3</MenuItem>
+        </Select>
+
+        <TextField id="filled-basic" label="ID" variant="filled" />
+
+        </Stack>
+      </FormControl>
+
+      <Button variant="contained" href="#contained-buttons">
+          Add
+        </Button>
+        <Button variant="contained" href="#contained-buttons">
+          Delete
+        </Button>
+        </Box>
+      </Popover>
+
+
+
+
+
+    <Popover 
+      id={id}
+      open={open}
+      anchorEl={anchorEl}
+      onClose={handleClose}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      >
+
+        <Box
+        m={5}>
+        Move pallets.
+
+      <FormControl fullWidth>
+      <Stack
+        spacing = {1} mb={1}
+        >
+        <InputLabel id="demo-simple-select-label">Id</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={age}
+          label="Age"
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+
+        <TextField id="filled-basic" label="Amount of palettes" variant="filled" />
+
+        <InputLabel id="demo-simple-select-label2">Current Position</InputLabel>
+        <Select
+          labelId="demo-simple-select-label2"
+          id="demo-simple-select2"
+          value={age}
+          label="Age"
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+
+        <InputLabel id="demo-simple-select-label3">New Position</InputLabel>
+        <Select
+          labelId="demo-simple-select-label3"
+          id="demo-simple-select3"
+          value={age}
+          label="Age"
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+        </Stack>
+      </FormControl>
+
+        <Button variant="contained" href="#contained-buttons">
+          Send
+        </Button>
+        </Box>
+      </Popover>
   </>
 )
                     };
