@@ -34,6 +34,26 @@ const itemData = [
     title: 'Warehouse-1',
   }
 ];
+
+const itemData2 = [
+  {
+    img: '/assets/products/product-1.png',
+    title: 'Product-1',
+  },
+  {
+    img: '/assets/products/product-2.png',
+    title: 'Product-2',
+  },
+  {
+    img: '/assets/products/product-5.png',
+    title: 'Product-3',
+  },
+  {
+    img: '/assets/products/product-4.png',
+    title: 'Product-4',
+  }
+];
+
 // {/assets/products/product-1.png
 //   img: '/assets/plans/wh1.png',
 //   title: 'Warehouse-1',
@@ -73,6 +93,24 @@ const Page = () => {
     const handleChange2 = (event) => {
       setSection(event.target.value);
     };
+
+
+    const [anchorE3, setAnchorE3] = React.useState(null);
+    const open3 = Boolean(anchorE3);
+    const id3 = open3 ? 'simple-popover' : undefined;
+    
+    const handleClick3 = (event) => {
+      setAnchorE3(event.currentTarget);
+    };
+    
+    const handleClose3 = () => {
+      setAnchorE3(null);
+    };
+    const handleChange3 = (event) => {
+      setSection(event.target.value);
+    };
+
+
 
     const canvWidth = 700;
     const canvHeight = 500;
@@ -127,24 +165,15 @@ const Page = () => {
                 spacing={1}
               >
                 <Button
+                  onClick={handleClick3}
                   color="inherit"
                   startIcon={(
                     <SvgIcon fontSize="small">
-                      <ArrowUpOnSquareIcon />
+                     <ArrowDownOnSquareIcon />
                     </SvgIcon>
                   )}
                 >
                   Import
-                </Button>
-                <Button
-                  color="inherit"
-                  startIcon={(
-                    <SvgIcon fontSize="small">
-                      <ArrowDownOnSquareIcon />
-                    </SvgIcon>
-                  )}
-                >
-                  Export
                 </Button>
               </Stack>
             </Stack>
@@ -217,6 +246,7 @@ const Page = () => {
                 direction="column"
                 spacing={2}>
                   <Button
+                    href="/manage-item"
                     startIcon={(
                       <SvgIcon fontSize="small">
                         <AdjustIcon />
@@ -279,6 +309,49 @@ const Page = () => {
         </Stack>
       </Container>
     </Box>
+
+
+    <Popover 
+      id={id3}
+      open={open3}
+      anchorEl={anchorE3}
+      onClose={handleClose3}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      >
+
+        <Box
+        m={5}>
+          Plans
+
+          <ImageList sx={{ width: 700, height: 500 }} cols={3} rowHeight={164}>
+                {itemData2.map((item) => (
+                  <ImageListItem key={item.img}>
+                      <img
+                        ref={imgRef}
+                        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        alt={item.title}
+                        loading="lazy"
+                      />
+                   
+
+                  </ImageListItem>
+                ))}
+              </ImageList>
+
+        <Button variant="contained" href="#contained-buttons">
+          Confirm
+        </Button>
+        </Box>
+      </Popover>
+
 
 
     <Popover 

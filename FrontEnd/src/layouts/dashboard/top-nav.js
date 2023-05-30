@@ -19,7 +19,7 @@ import {
 import { alpha } from '@mui/material/styles';
 import { usePopover } from 'src/hooks/use-popover';
 import { AccountPopover } from './account-popover';
-
+import { AlertPopover } from './alert-popover';
 import { useAuth } from 'src/hooks/use-auth';
 
 
@@ -128,7 +128,7 @@ export const TopNav = (props) => {
         open={accountPopover.open}
         onClose={accountPopover.handleClose}
       />
-      <AccountPopover
+      <AlertPopover
         anchorEl={notificationsPopover.anchorRef.current}
         open={notificationsPopover.open}
         onClose={notificationsPopover.handleClose}
