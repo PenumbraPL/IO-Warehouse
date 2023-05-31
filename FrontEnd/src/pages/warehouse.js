@@ -111,10 +111,20 @@ const Page = () => {
     };
 
 
+    const handleClick4 = (event) => {
+      imgRef = choosenImage
+    };
+
+    const [choosenImage, setImage] = React.useState();
+
+    const chooseImage = (event) => {
+      setImage(event.currentTarget); 
+    }
+
 
     const canvWidth = 700;
     const canvHeight = 500;
-    const imgRef = useRef();
+    let imgRef = useRef();
     const canvasRef = useRef();
 
     const drawRectangle = () => {
@@ -131,7 +141,7 @@ const Page = () => {
 
     useEffect(() => {
       drawRectangle();
-    }, []);
+    }, [imgRef]);
 
   return (
 
@@ -318,17 +328,17 @@ const Page = () => {
       onClose={handleClose3}
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'left',
+        horizontal: 'right',
       }}
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'right',
+        horizontal: 'left',
       }}
       >
 
         <Box
         m={5}>
-          Plans
+           <Typography sx={{ p: 2 }} variant='h6' > Choose plan of warehouse: </Typography>
 
           <ImageList sx={{ width: 700, height: 500 }} cols={3} rowHeight={164}>
                 {itemData2.map((item) => (
@@ -339,6 +349,7 @@ const Page = () => {
                         srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                         alt={item.title}
                         loading="lazy"
+                        onClick={chooseImage}
                       />
                    
 
@@ -346,7 +357,12 @@ const Page = () => {
                 ))}
               </ImageList>
 
-        <Button variant="contained" href="#contained-buttons">
+              <Typography sx={{ p: 2 }} variant='h6' > {choosenImage ? choosenImage.alt : ""} </Typography>
+
+        <Button 
+          onClick={handleClick4}
+          variant="contained" 
+          href="#contained-buttons">
           Confirm
         </Button>
         </Box>

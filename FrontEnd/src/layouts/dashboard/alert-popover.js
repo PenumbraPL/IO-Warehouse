@@ -23,8 +23,12 @@ export const AlertPopover = (props) => {
     <Popover
       anchorEl={anchorEl}
       anchorOrigin={{
-        horizontal: 'left',
+        horizontal: 'right',
         vertical: 'bottom'
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
       }}
       onClose={onClose}
       open={open}
