@@ -1,9 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Head from 'next/head';
-import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
-import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
-import ArrowUpLeftIcon from '@heroicons/react/24/solid/ArrowUpLeftIcon'
-import AdjustIcon from '@heroicons/react/24/solid/AdjustmentsVerticalIcon'
+import React, { useState } from 'react';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import Popover from '@mui/material/Popover';
 import InputLabel from '@mui/material/InputLabel';
@@ -15,15 +10,9 @@ import TextField from '@mui/material/TextField';
 import {
     Box,
     Button,
-    Container,
     Stack,
     SvgIcon,
-    Typography,
-    Unstable_Grid2 as Grid
 } from '@mui/material';
-import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
 
 export const AddRack = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -45,7 +34,6 @@ export const AddRack = () => {
   const handleChange = (event) => {
     setSection(event.target.value);
   };
-  
     return (
         <>
             <Button
