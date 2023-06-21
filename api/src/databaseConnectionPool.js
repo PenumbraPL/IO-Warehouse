@@ -54,6 +54,18 @@ class DatabaseConnectionPool {
         const result = await this.#client.query('DELETE FROM Racks WHERE ID = $1', [id]);
         return result.rowCount != 0;
     }
+
+    async getSectors() {
+        const sectors = (await this.#client.query('SELECT ID FROM Sectors')).rows;
+        return {
+            sectors: await Promise.all(sectors.map(async (sector) => {
+                return {
+                    ID: sector.id,
+                    Racks: (await this.#client.query('SELECT ID FROM Racks WHERE SectorID = $1', [sector.id])).rows.map((rack) => rack.id)
+                };
+            }, this))
+        };
+    }
 }
 
 module.exports = DatabaseConnectionPool;

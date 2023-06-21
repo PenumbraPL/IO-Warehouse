@@ -35,6 +35,10 @@ router.delete('/racks/:id', async (request, response) => {
     response.send();
 });
 
+router.get('/sectors', async (request, response) => {
+    response.send(await pool.getSectors());
+});
+
 // respond to invalid api requests with empty 404 response
 router.all('*', (request, response) => {
     response.status(404);
