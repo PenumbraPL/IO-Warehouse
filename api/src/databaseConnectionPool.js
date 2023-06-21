@@ -1,5 +1,5 @@
-const Ajv = require('ajv');
-const pg = require('pg');
+import Ajv from 'ajv';
+import pg from 'pg';
 
 const ajv = new Ajv();
 
@@ -67,4 +67,4 @@ class DatabaseConnectionPool {
     }
 }
 
-module.exports = DatabaseConnectionPool;
+export default DatabaseConnectionPool;

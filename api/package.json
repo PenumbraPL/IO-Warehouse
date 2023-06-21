@@ -1,5 +1,6 @@
 {
   "name": "api",
+  "type": "module",
   "scripts": {
     "start": "node src/index.js"
   },

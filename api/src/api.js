@@ -1,5 +1,5 @@
-const DatabaseConnectionPool = require('./databaseConnectionPool.js');
-const express = require('express');
+import DatabaseConnectionPool from './databaseConnectionPool.js';
+import express from 'express';
 
 const router = express.Router();
 router.use(express.json());
@@ -45,4 +45,4 @@ router.all('*', (request, response) => {
     response.send();
 });
 
-module.exports = router;
+export default router;
