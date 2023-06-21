@@ -65,6 +65,29 @@ class DatabaseConnectionPool {
             }, this))
         };
     }
+
+    static #validateSector = ajv.compile({
+        type: "object",
+        properties: {
+            name: { type: "string" }
+        },
+        additionalProperties: false,
+    })
+
+    async addSector(sector) {
+        if (!DatabaseConnectionPool.#validateSector(sector)) {
+            return null;
+        }
+
+        return {
+            sector: (await this.#client.query('INSERT INTO Sectors (Name) VALUES ($1) RETURNING ID', [sector.name])).rows[0]
+        }
+    }
+
+    async removeSector(id) {
+        const result = await this.#client.query('DELETE FROM Sectors WHERE ID = $1', [id]);
+        return result.rowCount != 0;
+    }
 }
 
 export default DatabaseConnectionPool;

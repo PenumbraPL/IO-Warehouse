@@ -39,6 +39,21 @@ router.get('/sectors', async (request, response) => {
     response.send(await pool.getSectors());
 });
 
+router.post('/sectors', async (request, response) => {
+    const content = await pool.addSector(request.body);
+    if (content == null) {
+        response.status(400)
+    }
+    response.send(content);
+});
+
+router.delete('/sectors/:id', async (request, response) => {
+    if (!await pool.removeSector(request.params.id)) {
+        response.status(204);
+    }
+    response.send();
+});
+
 // respond to invalid api requests with empty 404 response
 router.all('*', (request, response) => {
     response.status(404);
