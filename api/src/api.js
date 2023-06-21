@@ -5,7 +5,6 @@ const router = express.Router();
 router.use(express.json());
 
 const pool = new DatabaseConnectionPool();
-pool.connect();
 
 router.get('/racks', async (request, response) => {
     response.send(await pool.getRacks());
@@ -21,6 +20,20 @@ router.get('/racks/:id', async (request, response) => {
 
     response.send(rack);
 })
+
+router.post('/racks', async (request, response) => {
+    if (!await pool.addRack(request.body)) {
+        response.status(400);
+    }
+    response.send();
+});
+
+router.delete('/racks/:id', async (request, response) => {
+    if (!await pool.removeRack(request.params.id)) {
+        response.status(204);
+    }
+    response.send();
+});
 
 // respond to invalid api requests with empty 404 response
 router.all('*', (request, response) => {
