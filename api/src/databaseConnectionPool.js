@@ -38,7 +38,6 @@ class DatabaseConnectionPool {
     }
 
     async addRack(rack) {
-        console.log(rack);
         if (!DatabaseConnectionPool.#validateRack(rack)) {
             return false;
         }
