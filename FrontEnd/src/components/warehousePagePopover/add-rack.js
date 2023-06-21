@@ -15,6 +15,13 @@ import {
 } from '@mui/material';
 
 export const AddRack = () => {
+    const sectors = [
+        {
+          id: 1, 
+          racks: [1, 2, 3, 4]
+        },
+    ];
+    
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -26,14 +33,17 @@ export const AddRack = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    let [age, setAge] = React.useState('');
 
-    const [section, setSection] = React.useState(0);
+    const [sector, setSector] = React.useState(0);
+    const [rackId, setRackId] = React.useState(0);
 
+    const handleSectChange = (event) => {
+        setSector(event.target.value);
+    };
+    const handleIdChange = (event) => {
+        setRackId(event.target.value);
+    };
 
-  const handleChange = (event) => {
-    setSection(event.target.value);
-  };
     return (
         <>
             <Button
@@ -67,27 +77,35 @@ export const AddRack = () => {
                     m={5}>
                     Add/Delete racks
 
-                    <FormControl fullWidth>
                         <Stack
                             spacing={1} mb={1}
                         >
-                            <InputLabel id="demo-simple-select-label3">Section</InputLabel>
+                        <FormControl fullWidth>
+                            <InputLabel id="sector-label">sector</InputLabel>
                             <Select
-                                labelId="demo-simple-select-label3"
-                                id="demo-simple-select3"
-                                value={section}
-                                label="Section"
-                                onChange={handleChange}
+                                labelId="sector-label"
+                                id="sector-select"
+                                value={sector}
+                                label="sector"
+                                onChange={handleSectChange}
                             >
-                                <MenuItem value={1}>S1</MenuItem>
-                                <MenuItem value={2}>S2</MenuItem>
-                                <MenuItem value={3}>S3</MenuItem>
+                                {sectors.map((sector) => {
+                                    return (
+                                        <MenuItem value={sector.id}> {sector.id} </MenuItem>
+                                    );
+                                })}
                             </Select>
-
-                            <TextField id="filled-basic" label="ID" variant="filled" />
-
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <TextField 
+                                id="rack-id-select" 
+                                label="rack-id" 
+                                variant="filled"
+                                onChange={handleIdChange}
+                                />
+                        </FormControl>
                         </Stack>
-                    </FormControl>
+
 
                     <Button variant="contained" href="#contained-buttons">
                         Add

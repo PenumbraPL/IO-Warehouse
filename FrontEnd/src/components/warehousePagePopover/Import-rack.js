@@ -60,12 +60,12 @@ export const ImportRack = () => {
       setAnchorE3(null);
     };
     const handleChange3 = (event) => {
-      setSection(event.target.value);
+      setSector(event.target.value);
     };
 
 
   const handleChange = (event) => {
-    setSection(event.target.value);
+    setSector(event.target.value);
   };
   
   const handleClick4 = (event) => {
