@@ -15,11 +15,16 @@ class DatabaseConnectionPool {
     }
 
     async getRacks() {
-        return await this.#client.query('SELECT * FROM Racks');
+        return (await this.#client.query('SELECT * FROM Racks')).rows;
     }
 
     async getRack(id) {
-        return await this.#client.query('SELECT * FROM racks WHERE id = $1', [id]);
+        const result = await this.#client.query('SELECT * FROM Racks WHERE ID = $1', [id]);
+        if (result.rowCount == 0) {
+            return null;
+        } else {
+            return result.rows[0];
+        }
     }
 }
 
