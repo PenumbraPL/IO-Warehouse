@@ -73,15 +73,12 @@ class DatabaseConnectionPool {
     }
 
     async getSectors() {
-        const sectors = (await this.#client.query('SELECT ID FROM Sectors')).rows;
-        return {
-            sectors: await Promise.all(sectors.map(async (sector) => {
-                return {
-                    ID: sector.id,
-                    Racks: (await this.#client.query('SELECT ID FROM Racks WHERE SectorID = $1', [sector.id])).rows.map((rack) => rack.id)
-                };
-            }, this))
-        };
+        const sectors = (await this.#client.query('SELECT ID AS "ID", Name FROM Sectors')).rows;
+        return Promise.all(sectors.map(async (sector) => {
+            const rackIDs = (await this.#client.query('SELECT ID AS "ID" FROM Racks WHERE "sectorID" = $1', [sector.ID]));
+            sector.racks = rackIDs.rows.map((rack) => rack.ID)
+            return sector;
+        }, this))
     }
 
     static #validateSector = ajv.compile({
@@ -97,9 +94,7 @@ class DatabaseConnectionPool {
             return null;
         }
 
-        return {
-            sector: (await this.#client.query('INSERT INTO Sectors (Name) VALUES ($1) RETURNING ID', [sector.name])).rows[0]
-        }
+        return (await this.#client.query('INSERT INTO Sectors (Name) VALUES ($1) RETURNING ID AS "ID"', [sector.name])).rows[0];
     }
 
     async removeSector(id) {
@@ -113,13 +108,11 @@ class DatabaseConnectionPool {
             return null;
         }
 
-        const sector = (await this.#client.query('SELECT ID As "ID", 5 AS "Capacity" FROM Racks WHERE "sectorID" = $1', [id])).rows;
-        return result = {
-            sector: await Promise.all(sector.map(async (rack) => {
-                rack.slots = (await this.#client.query('SELECT * FROM Slots')).rows;
-                return rack;
-            }), this)
-        }
+        const sector = (await this.#client.query('SELECT ID As "ID", Capacity FROM Racks WHERE "sectorID" = $1', [id])).rows;
+        return Promise.all(sector.map(async (rack) => {
+            rack.slots = (await this.#client.query('SELECT * FROM Slots')).rows;
+            return rack;
+        }), this);
     }
 }
 
