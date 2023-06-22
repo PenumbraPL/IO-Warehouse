@@ -11,7 +11,7 @@ router.get('/racks', async (request, response) => {
 });
 
 router.get('/racks/:id', async (request, response) => {
-    const rack = await pool.getRack(request.params.id);
+    const rack = await pool.getRackById(request.params.id);
     if (!rack) {
         response.status(404);
         response.send({ 'error': 'Could not find rack matching provided id.' });
