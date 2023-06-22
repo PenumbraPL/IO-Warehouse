@@ -54,6 +54,17 @@ router.delete('/sectors/:id', async (request, response) => {
     response.send();
 });
 
+router.get('/sectors/:id', async (request, response) => {
+    const sector = await pool.getSectorById(request.params.id);
+    if (!sector) {
+        response.status(404);
+        response.send({ 'error': 'Could not find sector matching provided id.' });
+        return;
+    }
+
+    response.send(sector);
+})
+
 // respond to invalid api requests with empty 404 response
 router.all('*', (request, response) => {
     response.status(404);

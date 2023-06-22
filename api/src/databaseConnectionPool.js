@@ -21,7 +21,7 @@ class DatabaseConnectionPool {
         // gets connection info from environment variables
         // (https://www.postgresql.org/docs/current/libpq-envars.html)
         // TODO: use a config file instead
-        this.#client = new pg.Pool();
+        this.#client = new pg.Pool({max: 5});
     }
 
     async getRacks() {
@@ -87,6 +87,21 @@ class DatabaseConnectionPool {
     async removeSector(id) {
         const result = await this.#client.query('DELETE FROM Sectors WHERE ID = $1', [id]);
         return result.rowCount != 0;
+    }
+
+    async getSectorById(id) {
+        const doesSectorExist = (await this.#client.query('SELECT ID FROM Sectors WHERE ID = $1', [id])).rowCount == 1
+        if (!doesSectorExist) {
+            return null;
+        }
+
+        const sector = (await this.#client.query('SELECT ID As "ID", 5 AS "Capacity" FROM Racks WHERE "sectorID" = $1', [id])).rows;
+        return result = {
+            sector: await Promise.all(sector.map(async (rack) => {
+                rack.slots = (await this.#client.query('SELECT * FROM Slots')).rows;
+                return rack;
+            }), this)
+        }
     }
 }
 
