@@ -29,12 +29,6 @@ const itemData = [
 ];
 
 
-
-// {/assets/products/product-1.png
-//   img: '/assets/plans/wh1.png',
-//   title: 'Warehouse-1',
-// }
-
 const Page = () => {
 
   const canvWidth = 700;
@@ -62,7 +56,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Menage Warehouse
+          Manage Warehouse
         </title>
       </Head>
       <Box

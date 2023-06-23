@@ -1,30 +1,49 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Head from 'next/head';
-import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
-import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
+import React from 'react';
 import ArrowUpLeftIcon from '@heroicons/react/24/solid/ArrowUpLeftIcon'
-import AdjustIcon from '@heroicons/react/24/solid/AdjustmentsVerticalIcon'
 import Popover from '@mui/material/Popover';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-
 import {
     Box,
     Button,
-    Container,
     Stack,
     SvgIcon,
-    Typography,
-    Unstable_Grid2 as Grid
 } from '@mui/material';
-import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
+import { palette } from '@mui/system';
+import { subDays, subHours } from 'date-fns';
+
+const now = new Date();
 
 export const MovePopOver = () => {
+    const items = [
+        {
+          id: 1, 
+          name: 'Iulia Albu',
+          arriveDate: subDays(subHours(now, 8), 6).getTime(),
+          expiryDate: subDays(subHours(now, 8), 6).getTime(),
+          amount: 10
+        },
+    ];
+
+    const racks = [
+    {
+        id: 1,
+        height: 1, 
+        slots: {
+            name: 'A',
+            position: '10-2',
+            reserved: false,
+            arriveDate: subDays(subHours(now, 8), 6).getTime(),
+            expiryDate: subDays(subHours(now, 8), 6).getTime(),
+        },
+        amount: 10
+    },
+    ];
+
+    
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -32,14 +51,27 @@ export const MovePopOver = () => {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
     const handleClose = () => {
         setAnchorEl(null);
     };
-    let [age, setAge] = React.useState('');
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
+    const [palId, setPalId] = React.useState(0);
+    const [amount, setAmount] = React.useState(0);
+    const [currRack, setCurrRack] = React.useState(0);
+    const [newRack, setNewRack] = React.useState(0);
+
+
+    const handleIdChange = (event) => {
+        setPalId(event.target.value);
+    };
+    const handleAmountChange = (event) => {
+        setAmount(event.target.value);
+    };
+    const handleCurrRackChange = (event) => {
+        setCurrRack(event.target.value);
+    };
+    const handleNewRackChange = (event) => {
+        setNewRack(event.target.value);
     };
 
     return (
@@ -72,54 +104,71 @@ export const MovePopOver = () => {
 
                 <Box
                     m={5}>
-                    Move pallets.
+                    Move palette.
 
-                    <FormControl fullWidth>
                         <Stack
                             spacing={1} mb={1}
                         >
-                            <InputLabel id="demo-simple-select-label">Id</InputLabel>
+                        <FormControl fullWidth>
+                            <InputLabel id="palId-label">Id</InputLabel>
                             <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={age}
-                                label="Age"
-                                onChange={handleChange}
+                                labelId="palId-label"
+                                id="palId-select"
+                                value={palId}
+                                label="id"
+                                onChange={handleIdChange}
                             >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+
+                            {items.map((palette) => {
+                                return(
+                                    <MenuItem value={palette.id}>{palette.id}</MenuItem>
+                                );
+                            })}
                             </Select>
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <TextField 
+                                id="amount-select" 
+                                label="Amount of palettes" 
+                                variant="filled" 
+                                onChange={handleAmountChange}
+                                />
+                        </FormControl>
 
-                            <TextField id="filled-basic" label="Amount of palettes" variant="filled" />
-
-                            <InputLabel id="demo-simple-select-label2">Current Position</InputLabel>
+                        <FormControl fullWidth>
+                            <InputLabel id="curr-pos-label">Current Position</InputLabel>
                             <Select
-                                labelId="demo-simple-select-label2"
-                                id="demo-simple-select2"
-                                value={age}
-                                label="Age"
-                                onChange={handleChange}
+                                labelId="curr-pos-label"
+                                id="curr-pos-select"
+                                value={currRack}
+                                label="currRack"
+                                onChange={handleCurrRackChange}
                             >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                            {racks.map((rack) => {
+                                return(
+                                    <MenuItem value={rack.id}>{rack.id}</MenuItem>
+                                );
+                            })}
                             </Select>
+                        </FormControl>
 
-                            <InputLabel id="demo-simple-select-label3">New Position</InputLabel>
+                        <FormControl fullWidth>
+                            <InputLabel id="new-pos-label"> New Position </InputLabel>
                             <Select
-                                labelId="demo-simple-select-label3"
-                                id="demo-simple-select3"
-                                value={age}
-                                label="Age"
-                                onChange={handleChange}
+                                labelId="new-pos-label"
+                                id="new-pos-select"
+                                value={newRack}
+                                label="newRack"
+                                onChange={handleNewRackChange}
                             >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                            {racks.map((rack) => {
+                                return(
+                                    <MenuItem value={rack.id}>{rack.id}</MenuItem>
+                                );
+                            })}
                             </Select>
+                        </FormControl>
                         </Stack>
-                    </FormControl>
 
                     <Button variant="contained" href="#contained-buttons">
                         Send
