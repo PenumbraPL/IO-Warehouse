@@ -75,16 +75,16 @@ class DatabaseConnectionPool {
     async getSectors() {
         const sectors = (await this.#client.query('SELECT ID AS "ID", Name FROM Sectors')).rows;
         return Promise.all(sectors.map(async (sector) => {
-            const rackIDs = (await this.#client.query('SELECT ID AS "ID" FROM Racks WHERE "sectorID" = $1', [sector.ID]));
+            const rackIDs = (await this.#client.query('SELECT ID AS "ID" FROM Racks WHERE sectorID = $1', [sector.ID]));
             sector.racks = rackIDs.rows.map((rack) => rack.ID)
             return sector;
         }, this))
     }
 
     static #validateSector = ajv.compile({
-        type: "object",
+        type: 'object',
         properties: {
-            name: { type: "string" }
+            name: { type: 'string' }
         },
         additionalProperties: false,
     })
@@ -108,11 +108,41 @@ class DatabaseConnectionPool {
             return null;
         }
 
-        const sector = (await this.#client.query('SELECT ID As "ID", Capacity FROM Racks WHERE "sectorID" = $1', [id])).rows;
+        const sector = (await this.#client.query('SELECT ID As "ID", Capacity FROM Racks WHERE sectorID = $1', [id])).rows;
         return Promise.all(sector.map(async (rack) => {
             rack.slots = (await this.#client.query('SELECT * FROM Slots')).rows;
             return rack;
         }), this);
+    }
+
+    static #validateMoveSlot = ajv.compile({
+        type: 'object',
+        properties: {
+            sourceRackID: { type: 'integer' },
+            sourceSlotPosition: { type: 'integer' },
+            destinationRackID: { type: 'integer' },
+            destinationSlotPosition: { type: 'integer' }
+        },
+        required: ['sourceRackID', 'sourceSlotPosition', 'destinationRackID', 'destinationSlotPosition'],
+        additionalProperties: false,
+    })
+
+    async moveSlot(move) {
+        if (!DatabaseConnectionPool.#validateMoveSlot(move)) {
+            return null;
+        }
+
+        const slotQuery = await this.#client.query(
+            'SELECT RackID FROM Slots WHERE RackId = $1 AND Position = $2',
+            [move.sourceRackID, move.sourceSlotPosition]);
+        if (slotQuery.rowCount != 1) {
+            return null;
+        }
+
+        const result = await this.#client.query(
+            'UPDATE Slots SET RackId = $1, Position = $2 WHERE RackId = $3 AND Position = $4',
+            [move.destinationRackID, move.destinationSlotPosition, move.sourceRackID, move.sourceSlotPosition]);
+        return result.rowCount == 1;
     }
 }
 

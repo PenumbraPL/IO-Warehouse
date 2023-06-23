@@ -65,6 +65,14 @@ router.get('/sectors/:id', async (request, response) => {
     response.send(sector);
 })
 
+router.patch('/moveSlot', async (request, response) => {
+    const result = await pool.moveSlot(request.body);
+    if (result == null) {
+        response.status(400);
+    }
+    response.send();
+})
+
 // respond to invalid api requests with empty 404 response
 router.all('*', (request, response) => {
     response.status(404);
