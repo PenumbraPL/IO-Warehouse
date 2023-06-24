@@ -17,6 +17,7 @@ class DatabaseConnectionPool {
     static #validateRack = ajv.compile({
         type: 'object',
         properties: {
+            id: { type: 'integer' },
             capacity: { type: 'integer' },
             occupied: { type: 'integer' },
             sectorId: { type: 'integer' },
@@ -28,6 +29,7 @@ class DatabaseConnectionPool {
     async getRacks() {
         const racks = (await this.#client.query(`
             SELECT
+                ID AS "id",
                 Capacity AS "capacity",
                 Occupied AS "occupied",
                 SectorID AS "sectorId"
@@ -98,7 +100,13 @@ class DatabaseConnectionPool {
     }
 
     async removeSector(id) {
-        const result = await this.#client.query('DELETE FROM Sectors WHERE ID = $1', [id]);
+        const result = await this.#client.query(`
+            DELETE
+            FROM Sectors
+            WHERE
+                ID = $1
+                AND (SELECT COUNT(*) FROM Racks WHERE SectorID = $1) = 0;
+        `, [id]);
         return result.rowCount != 0;
     }
 
@@ -108,7 +116,7 @@ class DatabaseConnectionPool {
             return null;
         }
 
-        const sector = (await this.#client.query('SELECT ID As "ID", Capacity FROM Racks WHERE sectorID = $1', [id])).rows;
+        const sector = (await this.#client.query('SELECT ID As "rackID", Capacity FROM Racks WHERE sectorID = $1', [id])).rows;
         return Promise.all(sector.map(async (rack) => {
             rack.slots = (await this.#client.query('SELECT * FROM Slots')).rows;
             return rack;
@@ -143,6 +151,16 @@ class DatabaseConnectionPool {
             'UPDATE Slots SET RackId = $1, Position = $2 WHERE RackId = $3 AND Position = $4',
             [move.destinationRackID, move.destinationSlotPosition, move.sourceRackID, move.sourceSlotPosition]);
         return result.rowCount == 1;
+    }
+
+    // not intended to be used on a production database
+    async resetData() {
+        await Promise.all([
+            this.#client.query('TRUNCATE TABLE Racks, Sectors, Slots'),
+            this.#client.query('ALTER SEQUENCE racks_id_seq RESTART WITH 1'),
+            this.#client.query('ALTER SEQUENCE sectors_id_seq RESTART WITH 1'),
+            this.#client.query('ALTER SEQUENCE slots_id_seq RESTART WITH 1'),
+        ])
     }
 }
 

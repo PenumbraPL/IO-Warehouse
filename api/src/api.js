@@ -30,7 +30,7 @@ router.post('/racks', async (request, response) => {
 
 router.delete('/racks/:id', async (request, response) => {
     if (!await pool.removeRack(request.params.id)) {
-        response.status(204);
+        response.status(400);
     }
     response.send();
 });
@@ -42,14 +42,14 @@ router.get('/sectors', async (request, response) => {
 router.post('/sectors', async (request, response) => {
     const content = await pool.addSector(request.body);
     if (content == null) {
-        response.status(400)
+        response.status(400);
     }
     response.send(content);
 });
 
 router.delete('/sectors/:id', async (request, response) => {
     if (!await pool.removeSector(request.params.id)) {
-        response.status(204);
+        response.status(400);
     }
     response.send();
 });
