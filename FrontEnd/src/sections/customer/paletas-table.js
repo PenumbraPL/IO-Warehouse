@@ -14,35 +14,32 @@ import {
 import { Scrollbar } from 'src/components/scrollbar';
 
 
-const data2 =
+const data2 = [
+  {
+    capacity: 10, // liczba wszystkich miejsc
+    slots:
+      // only slots which are occupied or reserved
+      [{
+        name: "<itemName>",
+        position: 1,
+        reserved: 1,
 
-  [
-    {
-      capacity: 10, // liczba wszystkich miejsc
-      slots:
-        // only slots which are occupied or reserved
-        [{
-          name: "<itemName>",
-          position: 1,
-          reserved: 1,
+        arriveDate: "5.10.2000",
+        expiryDate: "5.10.2020"
+      },
+      {
+        name: "<itemName2>",
+        position: 2,
+        reserved: 1,
 
-          arriveDate: "5.10.2000",
-          expiryDate: "5.10.2020"
-        },
-        {
-          name: "<itemName2>",
-          position: 2,
-          reserved: 1,
+        arriveDate: "1.11.2001",
+        expiryDate: "3.3.2023"
+      }
+      ]
+  }
+];
 
-          arriveDate: "1.11.2001",
-          expiryDate: "3.3.2023"
-        }
-        ]
-    }
-  ];
-
-export function getdata(rackID = 1) {
-
+export function getData(rackID = 1) {
   const { isLoading, data, error } = useFetch("https://my-json-server.typicode.com/CoreNest/TestIO/rack" + rackID.toString());
   if (error) {
 
@@ -98,7 +95,7 @@ export const PaletasTable = (props) => {
     rackID = 1
   } = props;
 
-  let tabelaBody = getdata(rackID);  
+  let tabelaBody = getData(rackID);  
 
   return (
     <Card>

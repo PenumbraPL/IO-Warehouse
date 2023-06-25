@@ -1,18 +1,14 @@
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import {
-  Avatar,
   Box,
   Card,
-  Checkbox,
-  Stack,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
-  TableRow,
-  Typography
+  TableRow
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
@@ -21,19 +17,14 @@ export const RackTable = (props) => {
   const {
     count = 0,
     items = [],
-    onDeselectAll,
-    onDeselectOne,
     onPageChange = () => {},
     onRowsPerPageChange,
-    onSelectAll,
-    onSelectOne,
     page = 0,
     rowsPerPage = 0,
     selected = []
   } = props;
 
-  const selectedSome = (selected.length > 0) && (selected.length < items.length);
-  const selectedAll = (items.length > 0) && (selected.length === items.length);
+  console.log(items);
 
   return (
     <Card>
@@ -42,87 +33,42 @@ export const RackTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAll}
-                    indeterminate={selectedSome}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        onSelectAll?.();
-                      } else {
-                        onDeselectAll?.();
-                      }
-                    }}
-                  />
+                <TableCell>
+                  Sector ID
                 </TableCell>
                 <TableCell>
-                  Name
+                  Rack ID
                 </TableCell>
                 <TableCell>
-                  Amount
+                  % of capacity
                 </TableCell>
                 <TableCell>
-                  Date of receive
-                </TableCell>
-                <TableCell>
-                  Max period of storage
-                </TableCell>
-                <TableCell>
-                  Reserve
-                </TableCell>
-                <TableCell>
-                  In warehouse
+                  Max capacity
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
+              {items.map((rack) => {
+                const isSelected = selected.includes(rack.id);
+                const percentage = (a, b) => (a / b) * 100;
 
                 return (
                   <TableRow
                     hover
-                    key={customer.id}
+                    key={rack.id}
                     selected={isSelected}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            onSelectOne?.(customer.id);
-                          } else {
-                            onDeselectOne?.(customer.id);
-                          }
-                        }}
-                      />
+                    <TableCell>
+                      {rack.sectorId}
                     </TableCell>
                     <TableCell>
-                      <Stack
-                        alignItems="center"
-                        direction="row"
-                        spacing={2}
-                      >
-                        <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
-                        </Avatar>
-                        <Typography variant="subtitle2">
-                          {customer.name}
-                        </Typography>
-                      </Stack>
+                      {rack.id}
                     </TableCell>
                     <TableCell>
-                      {customer.email}
+                      {percentage(rack.occupied, rack.capacity)}%
                     </TableCell>
                     <TableCell>
-                      {customer.address.city}, {customer.address.state}, {customer.address.country}
-                    </TableCell>
-                    <TableCell>
-                      {customer.phone}
-                    </TableCell>
-                    <TableCell>
-                      {createdAt}
+                      {rack.capacity}
                     </TableCell>
                   </TableRow>
                 );

@@ -157,30 +157,46 @@ const data = [
   }
 ];
 
-const useCustomers = (page, rowsPerPage) => {
+
+const rackData = [
+  {
+    sectorId: 4,
+    id: 1,
+    occupied: 5,
+    capacity: 20,
+  },
+  {
+    sectorId: 4,
+    id: 2,
+    occupied: 4,
+    capacity: 20,
+  }
+]
+
+const useRacks = (page, rowsPerPage) => {
   return useMemo(
     () => {
-      return applyPagination(data, page, rowsPerPage);
+      return applyPagination(rackData, page, rowsPerPage);
     },
     [page, rowsPerPage]
   );
 };
 
-const useCustomerIds = (customers) => {
+const useRackIds = (racks) => {
   return useMemo(
     () => {
-      return customers.map((customer) => customer.id);
+      return racks.map((rack) => rack.id);
     },
-    [customers]
+    [racks]
   );
 };
 
 const Page = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const customers = useCustomers(page, rowsPerPage);
-  const customersIds = useCustomerIds(customers);
-  const customersSelection = useSelection(customersIds);
+  const racks = useRacks(page, rowsPerPage);
+  const racksIds = useRackIds(racks);
+  const racksSelection = useSelection(racksIds);
 
   const handlePageChange = useCallback(
     (event, value) => {
@@ -226,16 +242,11 @@ const Page = () => {
             </Stack>
             <RackTable
               count={data.length}
-              items={customers}
-              onDeselectAll={customersSelection.handleDeselectAll}
-              onDeselectOne={customersSelection.handleDeselectOne}
+              items={racks}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-              onSelectAll={customersSelection.handleSelectAll}
-              onSelectOne={customersSelection.handleSelectOne}
               page={page}
               rowsPerPage={rowsPerPage}
-              selected={customersSelection.selected}
             />
           </Stack>
         </Container>
