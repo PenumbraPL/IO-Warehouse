@@ -23,8 +23,7 @@ export const RackTable = (props) => {
     rowsPerPage = 0,
     selected = []
   } = props;
-
-  console.log(items);
+  const percentage = (a, b) => (a / b) * 100;
 
   return (
     <Card>
@@ -50,8 +49,6 @@ export const RackTable = (props) => {
             <TableBody>
               {items.map((rack) => {
                 const isSelected = selected.includes(rack.id);
-                const percentage = (a, b) => (a / b) * 100;
-
                 return (
                   <TableRow
                     hover
@@ -93,12 +90,8 @@ export const RackTable = (props) => {
 RackTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
-  onDeselectAll: PropTypes.func,
-  onDeselectOne: PropTypes.func,
   onPageChange: PropTypes.func,
   onRowsPerPageChange: PropTypes.func,
-  onSelectAll: PropTypes.func,
-  onSelectOne: PropTypes.func,
   page: PropTypes.number,
   rowsPerPage: PropTypes.number,
   selected: PropTypes.array

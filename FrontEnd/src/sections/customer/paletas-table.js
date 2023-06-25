@@ -23,7 +23,6 @@ const data2 = [
         name: "<itemName>",
         position: 1,
         reserved: 1,
-
         arriveDate: "5.10.2000",
         expiryDate: "5.10.2020"
       },
@@ -31,7 +30,6 @@ const data2 = [
         name: "<itemName2>",
         position: 2,
         reserved: 1,
-
         arriveDate: "1.11.2001",
         expiryDate: "3.3.2023"
       }
