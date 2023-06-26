@@ -162,6 +162,64 @@ class DatabaseConnectionPool {
             [move.destinationRackID, move.destinationSlotPosition, move.sourceRackID, move.sourceSlotPosition]);
         return result.rowCount == 1;
     }
+
+    static #validateItem = ajv.compile({
+        type: 'object',
+        properties: {
+            id: { type: 'integer' },
+            name: { type: 'string' },
+            description: { type: 'string' },
+        },
+        required: ['name', 'description'],
+        additionalProperties: false,
+    });
+
+    async getItems() {
+        const items = (await this.#client.query(`
+            SELECT
+                ID AS "id",
+                Name AS "name",
+                Description AS "description"
+            FROM Items;
+        `)).rows;
+        assert(items.every(r => DatabaseConnectionPool.#validateItem(r)));
+
+        return items;
+    }
+
+    async getItemById(id) {
+        const result = await this.#client.query(`
+            SELECT
+                ID AS "id",
+                Name AS "name",
+                Description AS "description"
+            FROM Items
+            WHERE ID = $1
+        `, [id]);
+        if (result.rowCount == 0) {
+            return null;
+        }
+
+        const item = result.rows[0];
+        assert(DatabaseConnectionPool.#validateItem(item));
+        return item;
+    }
+
+    async addItem(item) {
+        if (!DatabaseConnectionPool.#validateItem(item)) {
+            return false;
+        }
+
+        return await this.#client.query(
+            'INSERT INTO Items (Name, Description) VALUES ($1, $2);',
+            [item.name, item.description]
+        ).then(() => true, () => false);
+    }
+
+    async removeItem(id) {
+        const result = await this.#client.query('DELETE FROM Items WHERE ID = $1', [id]);
+        return result.rowCount != 0;
+    }
 }
 
 export default DatabaseConnectionPool;

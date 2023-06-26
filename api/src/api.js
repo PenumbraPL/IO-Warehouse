@@ -19,7 +19,7 @@ router.get('/racks/:id', async (request, response) => {
     }
 
     response.send(rack);
-})
+});
 
 router.post('/racks', async (request, response) => {
     if (!await pool.addRack(request.body)) {
@@ -63,7 +63,7 @@ router.get('/sectors/:id', async (request, response) => {
     }
 
     response.send(sector);
-})
+});
 
 router.patch('/moveSlot', async (request, response) => {
     const result = await pool.moveSlot(request.body);
@@ -71,7 +71,36 @@ router.patch('/moveSlot', async (request, response) => {
         response.status(400);
     }
     response.send();
-})
+});
+
+router.get('/items', async (request, response) => {
+    response.send(await pool.getItems());
+});
+
+router.get('/items/:id', async (request, response) => {
+    const item = await pool.getItemById(request.params.id);
+    if (!item) {
+        response.status(404);
+        response.send({ 'error': 'Could not find item matching provided id.' });
+        return;
+    }
+
+    response.send(item);
+});
+
+router.post('/items', async (request, response) => {
+    if (!await pool.addItem(request.body)) {
+        response.status(400);
+    }
+    response.send();
+});
+
+router.delete('/items/:id', async (request, response) => {
+    if (!await pool.removeItem(request.params.id)) {
+        response.status(400);
+    }
+    response.send();
+});
 
 // respond to invalid api requests with empty 404 response
 router.all('*', (request, response) => {
