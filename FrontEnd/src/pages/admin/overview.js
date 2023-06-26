@@ -23,116 +23,127 @@ const Page = () => {
   const user = auth.user;
 
   return (
-  <>
-    <Head>
-      <title>
-        Overview | Devias Kit
-      </title>
-    </Head>
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        py: 8
-      }}
-    >
-      <Container maxWidth="xl">
-      <Grid
+    <>
+      <Head>
+        <title>
+          Overview | Devias Kit
+        </title>
+      </Head>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 8
+        }}
+      >
+        <Container maxWidth="xl">
+          <Grid
             xs={12}
             sm={6}
             lg={3}
-            >
-            <Typography variant="h2" component="h2" margin={5}>
-              Welcome, { user ? user.name : ""}
+          >
+            <Typography variant="h2"
+              component="h2"
+              margin={5}>
+              Welcome, {user ? user.name : ""}
             </Typography>
           </Grid>
-        
-          <Grid
-          container
-          spacing={3}
-        >
-          <Grid
-            xs={12}
-            sm={6}
-            lg={4}
-            >
-            <Card >
-              <CardActionArea
-                href="/admin/calendar"
-              >
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image="\assets\cards\istockphoto-1307098713.jpg"
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Calendar
-                  </Typography>
-                
-                  <Typography variant="body2" color="text.secondary">
 
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+          <Grid
+            container
+            spacing={3}
+          >
+            <Grid
+              xs={12}
+              sm={6}
+              lg={4}
+            >
+              <Card >
+                <CardActionArea
+                  href="/calendar"
+                >
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image="\assets\cards\istockphoto-1307098713.jpg"
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom
+                      variant="h5"
+                      component="div">
+                      Calendar
+                    </Typography>
+
+                    <Typography variant="body2"
+                      color="text.secondary">
+
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
             </Grid>
             <Grid
-            xs={12}
-            sm={6}
-            lg={4}
+              xs={12}
+              sm={6}
+              lg={4}
             >
-            <Card >
-              <CardActionArea
-               href="/admin/employees" 
-              >
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image="\assets\cards\istockphoto-1309080507.jpg"
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Emplyees
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                   
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+              <Card >
+                <CardActionArea
+                  href="/admin/employees"
+                >
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image="\assets\cards\istockphoto-1309080507.jpg"
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom
+                      variant="h5"
+                      component="div">
+                      Emplyees
+                    </Typography>
+                    <Typography variant="body2"
+                      color="text.secondary">
+
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
             </Grid>
             <Grid
-            xs={12}
-            sm={6}
-            lg={4}
+              xs={12}
+              sm={6}
+              lg={4}
             >
-            <Card >
-              <CardActionArea
-                href="/admin/empl_app"
-              >
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image="\assets\cards\istockphoto-1217019016.jpg"
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Employees's applications
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+              <Card >
+                <CardActionArea
+                  href="/admin/empl_app"
+                >
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image="\assets\cards\istockphoto-1217019016.jpg"
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom
+                      variant="h5"
+                      component="div">
+                      {"Employees's applications"}
+                    </Typography>
+                    <Typography variant="body2"
+                      color="text.secondary">
+
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
             </Grid>
           </Grid>
 
-        {/* <Grid
+          {/* <Grid
           container
           spacing={3}
         >
@@ -211,10 +222,10 @@ const Page = () => {
             />
           </Grid>          
         </Grid> */}
-      </Container>
-    </Box>
-  </>
-    );
+        </Container>
+      </Box>
+    </>
+  );
 };
 
 Page.getLayout = (page) => (

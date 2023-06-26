@@ -19,7 +19,7 @@ const now = new Date();
 // Palettes drop down
 const items = [
   {
-    id: 1, 
+    id: 1,
     name: 'Iulia Albu',
     arriveDate: subDays(subHours(now, 8), 6).getTime(),
     expiryDate: subDays(subHours(now, 8), 6).getTime(),
@@ -30,14 +30,14 @@ const items = [
 // Slots drop down
 const slots = [
   {
-    id: 1, 
+    id: 1,
     name: 'Iulia Albu'
   },
 ];
 
 // Item to send
 const currItem = {
-  id: 1, 
+  id: 1,
   name: 'Iulia Albu',
   arriveDate: subDays(subHours(now, 8), 6).getTime(),
   expiryDate: subDays(subHours(now, 8), 6).getTime(),
@@ -96,31 +96,33 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                   Manage Items
+                  Manage Items
                 </Typography>
               </Stack>
             </Stack>
-            
+
             <Grid
               container
               spacing={3}
             >
-            <Grid
+              <Grid
                 xs={3}
                 sm={6}
                 lg={6}
               >
-            <Stack
-              direction="column"
-              justifyContent="space-between"
-              spacing={4}
-            >
-                <FormControl fullWidth margin='normal' size='medium'>
-                    <InputLabel 
+                <Stack
+                  direction="column"
+                  justifyContent="space-between"
+                  spacing={4}
+                >
+                  <FormControl fullWidth
+                    margin='normal'
+                    size='medium'>
+                    <InputLabel
                       id="id-label"
-                      >
+                    >
                       Id
-                      </InputLabel>
+                    </InputLabel>
                     <Select
                       labelId="id-label"
                       id="id-select"
@@ -130,31 +132,35 @@ const Page = () => {
                     >
                       {items.map((palette) => {
                         return (
-                          <MenuItem value={palette.amount}>{palette.id}</MenuItem>
+                          <MenuItem key={palette.amount} value={palette.amount}>{palette.id}</MenuItem>
                         );
                       })}
 
                     </Select>
-                </FormControl>
+                  </FormControl>
 
 
-                <FormControl fullWidth margin='normal' size='medium'>
-                      <TextField 
-                          id="amount-field" 
-                          labelId="amount-label" 
-                          label="Amount of palettes" 
-                          variant="filled" 
-                          onChange={handleAmountChange}
-                          />
-                </FormControl>
+                  <FormControl fullWidth
+                    margin='normal'
+                    size='medium'>
+                    <TextField
+                      id="amount-field"
+                      labelId="amount-label"
+                      label="Amount of palettes"
+                      variant="filled"
+                      onChange={handleAmountChange}
+                    />
+                  </FormControl>
 
 
-                <FormControl fullWidth margin='normal' size='medium'>
-                    <InputLabel 
+                  <FormControl fullWidth
+                    margin='normal'
+                    size='medium'>
+                    <InputLabel
                       id="slot-label"
-                      >
+                    >
                       Slot
-                      </InputLabel>
+                    </InputLabel>
                     <Select
                       labelId="slot-label"
                       id="slot-select"
@@ -164,19 +170,21 @@ const Page = () => {
                     >
                       {slots.map((slot) => {
                         return (
-                          <MenuItem value={slot.id}>{slot.id}</MenuItem>
+                          <MenuItem key={slot.id} value={slot.id}>{slot.id}</MenuItem>
                         );
                       })}
 
                     </Select>
-                </FormControl>
+                  </FormControl>
 
-                <FormControl fullWidth margin='normal' size='medium'>
-                    <InputLabel 
+                  <FormControl fullWidth
+                    margin='normal'
+                    size='medium'>
+                    <InputLabel
                       id="palette-label"
-                      >
+                    >
                       Palette ID
-                      </InputLabel>
+                    </InputLabel>
                     <Select
                       labelId="palette-label"
                       id="palette-select"
@@ -186,20 +194,23 @@ const Page = () => {
                     >
                       {items.map((palette) => {
                         return (
-                          <MenuItem value={palette.amount}>{palette.id}</MenuItem>
+                          <MenuItem key={palette.amount}
+                            value={palette.amount}>{palette.id}</MenuItem>
                         );
                       })}
 
                     </Select>
-                </FormControl>
+                  </FormControl>
 
 
-                <FormControl fullWidth margin='normal' size='medium'>
-                    <InputLabel 
+                  <FormControl fullWidth
+                    margin='normal'
+                    size='medium'>
+                    <InputLabel
                       id="slot-label"
-                      >
+                    >
                       Operation
-                      </InputLabel>
+                    </InputLabel>
                     <Select
                       labelId="slot-label"
                       id="slot-select"
@@ -212,24 +223,27 @@ const Page = () => {
                       <MenuItem value={'Reserve'}> Reserve </MenuItem>
                       <MenuItem value={'Deliver'}> Deliver </MenuItem>
                     </Select>
-                </FormControl>
+                  </FormControl>
 
 
-                <FormControl fullWidth margin='normal' size='medium'>
+                  <FormControl fullWidth
+                    margin='normal'
+                    size='medium'>
 
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <Stack>
-                          <DatePicker 
-                              label="Expiry date" 
-                              onChange={handleTimeChange}
-                              />
-                         </Stack>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <Stack>
+                        <DatePicker
+                          label="Expiry date"
+                          onChange={handleTimeChange}
+                        />
+                      </Stack>
                     </LocalizationProvider>
-                </FormControl>
+                  </FormControl>
 
-                <Button variant="contained" color="primary"> Send </Button>
+                  <Button variant="contained"
+                    color="primary"> Send </Button>
 
-              </Stack>
+                </Stack>
               </Grid>
 
               <Grid
@@ -237,8 +251,8 @@ const Page = () => {
                 sm={6}
                 lg={6}
               ></Grid>
-              </Grid>
-            </Stack>
+            </Grid>
+          </Stack>
         </Container>
       </Box>
     </>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import {add, format, subDays, subHours ,formatDistance ,compareDesc} from 'date-fns';
 import PropTypes from 'prop-types';
 import useFetch from "react-fetch-hook";
 import Alert from '@mui/material/Alert';
@@ -74,10 +75,10 @@ export function getData(rackID = 1) {
                   {paleta.name}
                 </TableCell>
                 <TableCell>
-                  {paleta.arriveDate}
+                  {format(paleta.arriveDate , 'dd.MM.yyyy')}
                 </TableCell>
-                <TableCell sx={{ background: paleta.expiryDate == "5.10.2020" ? "red" : "" }}>
-                  {paleta.expiryDate}
+                <TableCell sx={{ background: (compareDesc(paleta.expiryDate,new Date()))==1 ? "red" : compareDesc(paleta.expiryDate,add(new Date(),{months:2}))==1?"blue":"" }}>
+                  {format(paleta.expiryDate , 'dd.MM.yyyy')}
                 </TableCell>
               </TableRow>
             );
@@ -98,40 +99,42 @@ export const PaletasTable = (props) => {
   let tabelaBody = getData(rackID);  
 
   return (
-    <Card>
-      <Scrollbar>
-        <Box sx={{ minWidth: 800 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  Sector
-                </TableCell>
-                <TableCell>
-                  Rack
-                </TableCell>
-                {/* <TableCell>
+      <Card>
+        <Scrollbar>
+          <Box sx={{ minWidth: 800 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    Sector
+                  </TableCell>
+                  <TableCell>
+                    Rack
+                  </TableCell>
+                  {/* <TableCell>
                   Paleta
                 </TableCell> */}
-                <TableCell>
-                  Position
-                </TableCell>
-                <TableCell>
-                  Name
-                </TableCell>
-                <TableCell>
-                  ArriveDate
-                </TableCell>
-                <TableCell>
-                  ExpiryDate
-                </TableCell>
-              </TableRow>
-            </TableHead>                
-            {tabelaBody}
-          </Table>
-        </Box>
-      </Scrollbar>
-    </Card>
+                  <TableCell>
+                    Position
+                  </TableCell>
+                  <TableCell>
+                    Name
+                  </TableCell>
+                  <TableCell>
+                    ArriveDate
+                  </TableCell>
+                  <TableCell>
+                    ExpiryDate
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              {tabelaBody}
+            </Table>
+            
+          </Box>
+        </Scrollbar>
+      </Card>
+      
   );
 };
 

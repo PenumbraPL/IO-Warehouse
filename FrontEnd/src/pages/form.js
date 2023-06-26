@@ -36,14 +36,16 @@ const Page = () => {
 
 
   const SectorsListId = (datas) => {
-    return datas.map(data => (<MenuItem value={data.ID}>{data.ID}</MenuItem>))
+    return datas.map(data => (<MenuItem key={data.ID}
+      value={data.ID}>{data.ID}</MenuItem>))
   }
   const SectorsListRack = (datas, val) => {
 
     return datas.map(data => (
       (data.ID == val) ?
         data.racks.map(num =>
-          <MenuItem value={num}>{num}</MenuItem>) :
+          <MenuItem key={num}
+            value={num}>{num}</MenuItem>) :
         <></>
     ))
   }
@@ -80,20 +82,20 @@ const Page = () => {
                 >
                   <InputLabel id="select-sector-label">Section</InputLabel>
                   <FormControl sx={{ m: 1, minWidth: 140 }}>
-                    
-                    
-                      <Select
-                        labelId="select-sector-label"
-                        id="select-sector"
-                        value={selectedSector}
-                        label="Section"
-                        onChange={handleChangeSector}
-                      >
-                        {/* <option aria-label="All" value="All" label='All' /> */}
-                        {SectorsListId(Sectors)}
 
-                      </Select>
-                    
+
+                    <Select
+                      labelId="select-sector-label"
+                      id="select-sector"
+                      value={selectedSector}
+                      label="Section"
+                      onChange={handleChangeSector}
+                    >
+                      {/* <option aria-label="All" value="All" label='All' /> */}
+                      {SectorsListId(Sectors)}
+
+                    </Select>
+
                   </FormControl >
                   <InputLabel id="select-rack-label">Rack</InputLabel>
                   <FormControl sx={{ m: 1, minWidth: 120 }}>

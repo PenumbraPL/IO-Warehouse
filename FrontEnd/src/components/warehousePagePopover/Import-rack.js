@@ -114,9 +114,12 @@ export const ImportRack = () => {
 
         <Box
           m={5}>
-          <Typography sx={{ p: 2 }} variant='h6' > Choose plan of warehouse: </Typography>
+          <Typography sx={{ p: 2 }}
+variant='h6' > Choose plan of warehouse: </Typography>
 
-          <ImageList sx={{ width: 700, height: 500 }} cols={3} rowHeight={164}>
+          <ImageList sx={{ width: 700, height: 500 }}
+cols={3}
+rowHeight={164}>
             {itemData2.map((item) => (
               <ImageListItem key={item.img}>
                 <img
@@ -133,7 +136,8 @@ export const ImportRack = () => {
             ))}
           </ImageList>
 
-          <Typography sx={{ p: 2 }} variant='h6' > {choosenImage ? choosenImage.alt : ""} </Typography>
+          <Typography sx={{ p: 2 }}
+variant='h6' > {choosenImage ? choosenImage.alt : ""} </Typography>
 
           <Button
             onClick={handleClick4}

@@ -128,7 +128,9 @@ const Page = () => {
                     <ArrowUpLeftIcon />
                   </SvgIcon>
                 )}
-                aria-describedby={id} variant="contained" onClick={handleClick}
+                aria-describedby={id}
+variant="contained"
+onClick={handleClick}
                >
                   Send Application
               </Button>
@@ -157,7 +159,8 @@ const Page = () => {
                           <DatePicker label="Pick date" />
                           <TimePicker label="Pick starting time" /> 
                           <TimePicker label="Pick finishing time" />
-                          <Button variant="contained" color="primary"> Send </Button>
+                          <Button variant="contained"
+color="primary"> Send </Button>
                           </Stack>
                     </LocalizationProvider>
                 </Box>
