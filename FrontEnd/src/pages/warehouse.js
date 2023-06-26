@@ -1,0 +1,508 @@
+import React, {useState, useRef, useEffect} from 'react';
+import Head from 'next/head';
+import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
+import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
+import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
+import AdjustIcon from '@heroicons/react/24/solid/AdjustmentsVerticalIcon'
+import ArrowUpLeftIcon from '@heroicons/react/24/solid/ArrowUpLeftIcon'
+import Bar3ListIcon from '@heroicons/react/24/solid/Bars3BottomLeftIcon'
+import PaletteIcon from '@heroicons/react/24/solid/InboxStackIcon'
+import ClockIcon from '@heroicons/react/24/solid/ClockIcon'
+import Popover from '@mui/material/Popover';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+
+import {
+  Box,
+  Button,
+  Container,
+  Stack,
+  SvgIcon,
+  Typography,
+  Unstable_Grid2 as Grid
+} from '@mui/material';
+import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+
+const itemData = [
+  {
+    img: '/assets/plans/wh1.png',
+    title: 'Warehouse-1',
+  }
+];
+
+const itemData2 = [
+  {
+    img: '/assets/products/product-1.png',
+    title: 'Product-1',
+  },
+  {
+    img: '/assets/products/product-2.png',
+    title: 'Product-2',
+  },
+  {
+    img: '/assets/products/product-5.png',
+    title: 'Product-3',
+  },
+  {
+    img: '/assets/products/product-4.png',
+    title: 'Product-4',
+  }
+];
+
+// {/assets/products/product-1.png
+//   img: '/assets/plans/wh1.png',
+//   title: 'Warehouse-1',
+// }
+
+const Page = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+  
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  
+    const [age, setAge] = React.useState('');
+  
+    const handleChange = (event) => {
+      setAge(event.target.value);
+    };
+
+    const [anchorE2, setAnchorE2] = React.useState(null);
+    const open2 = Boolean(anchorE2);
+    const id2 = open2 ? 'simple-popover' : undefined;
+    const [section, setSection] = React.useState(0);
+    
+    const handleClick2 = (event) => {
+      setAnchorE2(event.currentTarget);
+    };
+    
+    const handleClose2 = () => {
+      setAnchorE2(null);
+    };
+    const handleChange2 = (event) => {
+      setSection(event.target.value);
+    };
+
+
+    const [anchorE3, setAnchorE3] = React.useState(null);
+    const open3 = Boolean(anchorE3);
+    const id3 = open3 ? 'simple-popover' : undefined;
+    
+    const handleClick3 = (event) => {
+      setAnchorE3(event.currentTarget);
+    };
+    
+    const handleClose3 = () => {
+      setAnchorE3(null);
+    };
+    const handleChange3 = (event) => {
+      setSection(event.target.value);
+    };
+
+
+    const handleClick4 = (event) => {
+      imgRef = choosenImage
+    };
+
+    const [choosenImage, setImage] = React.useState();
+
+    const chooseImage = (event) => {
+      setImage(event.currentTarget); 
+    }
+
+
+    const canvWidth = 700;
+    const canvHeight = 500;
+    let imgRef = useRef();
+    const canvasRef = useRef();
+
+    const drawRectangle = () => {
+      const context = canvasRef.current.getContext("2d");
+      context.drawImage(imgRef.current, 0, 0, canvWidth, canvHeight)
+
+      context.strokeStyle = "red";
+      context.lineWidth = 2;
+      context.strokeRect(50, 30, 110, 90);
+      context.strokeRect(170, 65, 100, 80);
+
+    };
+
+
+    useEffect(() => {
+      drawRectangle();
+    }, [imgRef]);
+
+  return (
+
+  <>
+    <Head>
+      <title>
+        Companies | Devias Kit
+      </title>
+    </Head>
+    <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        py: 8
+      }}
+    >
+      <Container maxWidth="xl">
+        <Stack spacing={3}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            spacing={4}
+          >
+            <Stack spacing={1}>
+              <Typography variant="h4">
+                Warehouse
+              </Typography>
+              <Stack
+                alignItems="center"
+                direction="row"
+                spacing={1}
+              >
+                <Button
+                  onClick={handleClick3}
+                  color="inherit"
+                  startIcon={(
+                    <SvgIcon fontSize="small">
+                     <ArrowDownOnSquareIcon />
+                    </SvgIcon>
+                  )}
+                >
+                  Import
+                </Button>
+              </Stack>
+            </Stack>
+            <div>
+              <Button
+                onClick={handleClick2}
+                startIcon={(
+                  <SvgIcon fontSize="small">
+                    <PlusIcon />
+                  </SvgIcon>
+                )}
+                variant="contained"
+              >
+                Add Rack
+              </Button>
+            </div>
+          </Stack>
+   
+          <Grid
+            container
+            spacing={3}
+          >
+            <Grid
+              xs={10}
+              sm={6}
+              lg={6}
+            >
+              <ImageList sx={{ width: 1000, height: 900 }} cols={3} rowHeight={164}>
+                {itemData.map((item) => (
+                  <ImageListItem key={item.img}>
+                    <div>
+                      <canvas 
+                        ref={canvasRef}  
+                        width={canvWidth}
+                        height={canvHeight}
+                      />                 
+                      <img
+                        ref={imgRef}
+                        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        alt={item.title}
+                        loading="lazy"
+                        hidden
+                      />
+                    </div>
+                   
+
+                  </ImageListItem>
+                ))}
+              </ImageList>
+
+            </Grid>
+            <Grid
+              xs={0}
+              sm={3}
+              lg={3}
+            >
+             
+
+
+
+
+            </Grid>
+            <Grid
+              xs={2}
+              sm={3}
+              lg={3}
+            >
+              <Stack
+                direction="column"
+                spacing={2}>
+                  <Button
+                    href="/manage-item"
+                    startIcon={(
+                      <SvgIcon fontSize="small">
+                        <AdjustIcon />
+                      </SvgIcon>
+                    )}
+                    variant="contained"
+                  >
+                    Manage Items
+                  </Button>
+
+                  <Button
+                    startIcon={(
+                      <SvgIcon fontSize="small">
+                        <ArrowUpLeftIcon />
+                      </SvgIcon>
+                    )}
+                    aria-describedby={id} variant="contained" onClick={handleClick}
+                  >
+                    Move Item
+                  </Button>
+
+                  <Button
+                    startIcon={(
+                      <SvgIcon fontSize="small">
+                        <Bar3ListIcon />
+                      </SvgIcon>
+                    )}
+                    variant="contained"
+                    href="/racks"
+                  >
+                  Rack List
+                  </Button>
+
+                  <Button
+                    startIcon={(
+                      <SvgIcon fontSize="small">
+                        <PaletteIcon />
+                      </SvgIcon>
+                    )}
+                    variant="contained"
+                    href="/palettes"
+                  >
+                    Palettes
+                  </Button>
+
+                  <Button
+                    startIcon={(
+                      <SvgIcon fontSize="small">
+                        <ClockIcon />
+                      </SvgIcon>
+                    )}
+                    variant="contained"
+                    href="/short_term_prods"
+                  >
+                    Short Self Life Products
+                  </Button>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Stack>
+      </Container>
+    </Box>
+
+
+    <Popover 
+      id={id3}
+      open={open3}
+      anchorEl={anchorE3}
+      onClose={handleClose3}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'right',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'left',
+      }}
+      >
+
+        <Box
+        m={5}>
+           <Typography sx={{ p: 2 }} variant='h6' > Choose plan of warehouse: </Typography>
+
+          <ImageList sx={{ width: 700, height: 500 }} cols={3} rowHeight={164}>
+                {itemData2.map((item) => (
+                  <ImageListItem key={item.img}>
+                      <img
+                        ref={imgRef}
+                        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        alt={item.title}
+                        loading="lazy"
+                        onClick={chooseImage}
+                      />
+                   
+
+                  </ImageListItem>
+                ))}
+              </ImageList>
+
+              <Typography sx={{ p: 2 }} variant='h6' > {choosenImage ? choosenImage.alt : ""} </Typography>
+
+        <Button 
+          onClick={handleClick4}
+          variant="contained" 
+          href="#contained-buttons">
+          Confirm
+        </Button>
+        </Box>
+      </Popover>
+
+
+
+    <Popover 
+      id={id2}
+      open={open2}
+      anchorEl={anchorE2}
+      onClose={handleClose2}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      >
+
+        <Box
+        m={5}>
+        Add/Delete racks
+
+      <FormControl fullWidth>
+      <Stack
+        spacing = {1} mb={1}
+        >
+        <InputLabel id="demo-simple-select-label3">Section</InputLabel>
+        <Select
+          labelId="demo-simple-select-label3"
+          id="demo-simple-select3"
+          value={section}
+          label="Section"
+          onChange={handleChange2}
+        >
+          <MenuItem value={1}>S1</MenuItem>
+          <MenuItem value={2}>S2</MenuItem>
+          <MenuItem value={3}>S3</MenuItem>
+        </Select>
+
+        <TextField id="filled-basic" label="ID" variant="filled" />
+
+        </Stack>
+      </FormControl>
+
+      <Button variant="contained" href="#contained-buttons">
+          Add
+        </Button>
+        <Button variant="contained" href="#contained-buttons">
+          Delete
+        </Button>
+        </Box>
+      </Popover>
+
+
+
+
+
+    <Popover 
+      id={id}
+      open={open}
+      anchorEl={anchorEl}
+      onClose={handleClose}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      >
+
+        <Box
+        m={5}>
+        Move pallets.
+
+      <FormControl fullWidth>
+      <Stack
+        spacing = {1} mb={1}
+        >
+        <InputLabel id="demo-simple-select-label">Id</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={age}
+          label="Age"
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+
+        <TextField id="filled-basic" label="Amount of palettes" variant="filled" />
+
+        <InputLabel id="demo-simple-select-label2">Current Position</InputLabel>
+        <Select
+          labelId="demo-simple-select-label2"
+          id="demo-simple-select2"
+          value={age}
+          label="Age"
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+
+        <InputLabel id="demo-simple-select-label3">New Position</InputLabel>
+        <Select
+          labelId="demo-simple-select-label3"
+          id="demo-simple-select3"
+          value={age}
+          label="Age"
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+        </Stack>
+      </FormControl>
+
+        <Button variant="contained" href="#contained-buttons">
+          Send
+        </Button>
+        </Box>
+      </Popover>
+  </>
+)
+                    };
+
+Page.getLayout = (page) => (
+  <DashboardLayout>
+    {page}
+  </DashboardLayout>
+);
+
+export default Page;
