@@ -32,6 +32,12 @@ async function executeFromFile(fileType) {
     client.end();
 }
 
-executeFromFile('dml');
-
 export default executeFromFile;
+
+const args = process.argv.slice(2);
+if (args.length > 0) {
+    console.log(args);
+    args.forEach(async val => {
+        await executeFromFile(val);
+    });
+}
