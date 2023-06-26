@@ -98,7 +98,9 @@ const Page = () => {
                 sm={6}
                 lg={6}
               >
-                <ImageList sx={{ width: 1000, height: 900 }} cols={3} rowHeight={164}>
+                <ImageList sx={{ width: 1000, height: 900 }}
+cols={3}
+rowHeight={164}>
                   {itemData.map((item) => (
                     <ImageListItem key={item.img}>
                       <div>

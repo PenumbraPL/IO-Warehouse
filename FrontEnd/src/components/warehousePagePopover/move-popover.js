@@ -20,30 +20,30 @@ const now = new Date();
 export const MovePopOver = () => {
     const items = [
         {
-          id: 1, 
-          name: 'Iulia Albu',
-          arriveDate: subDays(subHours(now, 8), 6).getTime(),
-          expiryDate: subDays(subHours(now, 8), 6).getTime(),
-          amount: 10
+            id: 1,
+            name: 'Iulia Albu',
+            arriveDate: subDays(subHours(now, 8), 6).getTime(),
+            expiryDate: subDays(subHours(now, 8), 6).getTime(),
+            amount: 10
         },
     ];
 
     const racks = [
-    {
-        id: 1,
-        height: 1, 
-        slots: {
-            name: 'A',
-            position: '10-2',
-            reserved: false,
-            arriveDate: subDays(subHours(now, 8), 6).getTime(),
-            expiryDate: subDays(subHours(now, 8), 6).getTime(),
+        {
+            id: 1,
+            height: 1,
+            slots: {
+                name: 'A',
+                position: '10-2',
+                reserved: false,
+                arriveDate: subDays(subHours(now, 8), 6).getTime(),
+                expiryDate: subDays(subHours(now, 8), 6).getTime(),
+            },
+            amount: 10
         },
-        amount: 10
-    },
     ];
 
-    
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -79,11 +79,12 @@ export const MovePopOver = () => {
             <Button
                 startIcon={(
                     <SvgIcon fontSize="small">
-                        <ArrowUpLeftIcon /> 
+                        <ArrowUpLeftIcon />
                     </SvgIcon>
                 )}
                 // aria-describedby={id}
-                variant="contained" onClick={handleClick}
+                variant="contained"
+                onClick={handleClick}
             >
                 Move Item
             </Button>
@@ -106,9 +107,10 @@ export const MovePopOver = () => {
                     m={5}>
                     Move palette.
 
-                        <Stack
-                            spacing={1} mb={1}
-                        >
+                    <Stack
+                        spacing={1}
+                        mb={1}
+                    >
                         <FormControl fullWidth>
                             <InputLabel id="palId-label">Id</InputLabel>
                             <Select
@@ -119,20 +121,21 @@ export const MovePopOver = () => {
                                 onChange={handleIdChange}
                             >
 
-                            {items.map((palette) => {
-                                return(
-                                    <MenuItem value={palette.id}>{palette.id}</MenuItem>
-                                );
-                            })}
+                                {items.map((palette) => {
+                                    return (
+                                        <MenuItem key={palette.id}
+value={palette.id}>{palette.id}</MenuItem>
+                                    );
+                                })}
                             </Select>
                         </FormControl>
                         <FormControl fullWidth>
-                            <TextField 
-                                id="amount-select" 
-                                label="Amount of palettes" 
-                                variant="filled" 
+                            <TextField
+                                id="amount-select"
+                                label="Amount of palettes"
+                                variant="filled"
                                 onChange={handleAmountChange}
-                                />
+                            />
                         </FormControl>
 
                         <FormControl fullWidth>
@@ -144,11 +147,12 @@ export const MovePopOver = () => {
                                 label="currRack"
                                 onChange={handleCurrRackChange}
                             >
-                            {racks.map((rack) => {
-                                return(
-                                    <MenuItem value={rack.id}>{rack.id}</MenuItem>
-                                );
-                            })}
+                                {racks.map((rack) => {
+                                    return (
+                                        <MenuItem key={rack.id}
+value={rack.id}>{rack.id}</MenuItem>
+                                    );
+                                })}
                             </Select>
                         </FormControl>
 
@@ -161,16 +165,18 @@ export const MovePopOver = () => {
                                 label="newRack"
                                 onChange={handleNewRackChange}
                             >
-                            {racks.map((rack) => {
-                                return(
-                                    <MenuItem value={rack.id}>{rack.id}</MenuItem>
-                                );
-                            })}
+                                {racks.map((rack) => {
+                                    return (
+                                        <MenuItem key={rack.id}
+value={rack.id}>{rack.id}</MenuItem>
+                                    );
+                                })}
                             </Select>
                         </FormControl>
-                        </Stack>
+                    </Stack>
 
-                    <Button variant="contained" href="#contained-buttons">
+                    <Button variant="contained"
+                        href="#contained-buttons">
                         Send
                     </Button>
                 </Box>

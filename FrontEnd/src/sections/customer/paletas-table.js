@@ -16,7 +16,7 @@ import { Scrollbar } from 'src/components/scrollbar';
 
 
 
-export function getdata(rackID = 1) {
+export function Getdata(rackID = 1) {
 
   const { isLoading, data, error } = useFetch("https://my-json-server.typicode.com/CoreNest/TestIO/rack" + rackID.toString());
   if (error) {
@@ -73,7 +73,7 @@ export const PaletasTable = (props) => {
     rackID = 1
   } = props;
 
-  let tabelaBody = getdata(rackID);
+  let tabelaBody = Getdata(rackID);
 
   return (
       <Card>

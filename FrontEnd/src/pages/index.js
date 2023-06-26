@@ -42,7 +42,9 @@ const Page = () => {
             sm={6}
             lg={3}
             >
-            <Typography variant="h2" component="h2" margin={5}>
+            <Typography variant="h2"
+component="h2"
+margin={5}>
               Welcome, {user ? user.name : "" }
             </Typography>
           </Grid>
@@ -67,11 +69,14 @@ const Page = () => {
                   alt="green iguana"
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography gutterBottom
+variant="h5"
+component="div">
                     Calendar
                   </Typography>
                 
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2"
+color="text.secondary">
 
                   </Typography>
                 </CardContent>
@@ -94,10 +99,13 @@ const Page = () => {
                   alt="green iguana"
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography gutterBottom
+variant="h5"
+component="div">
                     Warehouse
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2"
+color="text.secondary">
                    
                   </Typography>
                 </CardContent>
@@ -120,10 +128,13 @@ const Page = () => {
                   alt="green iguana"
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography gutterBottom
+variant="h5"
+component="div">
                     Form
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2"
+color="text.secondary">
                     
                   </Typography>
                 </CardContent>

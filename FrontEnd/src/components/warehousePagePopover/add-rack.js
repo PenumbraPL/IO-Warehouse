@@ -17,11 +17,11 @@ import {
 export const AddRack = () => {
     const sectors = [
         {
-          id: 1, 
-          racks: [1, 2, 3, 4]
+            id: 1,
+            racks: [1, 2, 3, 4]
         },
     ];
-    
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -77,9 +77,10 @@ export const AddRack = () => {
                     m={5}>
                     Add/Delete racks
 
-                        <Stack
-                            spacing={1} mb={1}
-                        >
+                    <Stack
+                        spacing={1}
+                        mb={1}
+                    >
                         <FormControl fullWidth>
                             <InputLabel id="sector-label">sector</InputLabel>
                             <Select
@@ -91,26 +92,29 @@ export const AddRack = () => {
                             >
                                 {sectors.map((sector) => {
                                     return (
-                                        <MenuItem value={sector.id}> {sector.id} </MenuItem>
+                                        <MenuItem key={sector.id}
+value={sector.id}> {sector.id} </MenuItem>
                                     );
                                 })}
                             </Select>
                         </FormControl>
                         <FormControl fullWidth>
-                            <TextField 
-                                id="rack-id-select" 
-                                label="rack-id" 
+                            <TextField
+                                id="rack-id-select"
+                                label="rack-id"
                                 variant="filled"
                                 onChange={handleIdChange}
-                                />
+                            />
                         </FormControl>
-                        </Stack>
+                    </Stack>
 
 
-                    <Button variant="contained" href="#contained-buttons">
+                    <Button variant="contained"
+                        href="#contained-buttons">
                         Add
                     </Button>
-                    <Button variant="contained" href="#contained-buttons">
+                    <Button variant="contained"
+                        href="#contained-buttons">
                         Delete
                     </Button>
                 </Box>
