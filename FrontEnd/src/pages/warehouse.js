@@ -23,7 +23,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 
 const itemData = [
   {
-    img: '/assets/plans/wh1.png',
+    img: '/assets/plans/wh2.png',
     title: 'Warehouse-1',
   }
 ];
@@ -36,21 +36,21 @@ const Page = () => {
   let imgRef = useRef();
   const canvasRef = useRef();
 
-  const drawRectangle = () => {
-    const context = canvasRef.current.getContext("2d");
-    context.drawImage(imgRef.current, 0, 0, canvWidth, canvHeight)
+  // const drawRectangle = () => {
+  //   const context = canvasRef.current.getContext("2d");
+  //   context.drawImage(imgRef.current, 0, 0, canvWidth, canvHeight)
 
-    context.strokeStyle = "red";
-    context.lineWidth = 2;
-    context.strokeRect(50, 30, 110, 90);
-    context.strokeRect(170, 65, 100, 80);
+  //   context.strokeStyle = "red";
+  //   context.lineWidth = 2;
+  //   context.strokeRect(50, 30, 110, 90);
+  //   context.strokeRect(170, 65, 100, 80);
 
-  };
+  // };
 
 
-  useEffect(() => {
-    drawRectangle();
-  }, [imgRef]);
+  // useEffect(() => {
+  //   drawRectangle();
+  // }, [imgRef]);
 
   return (
     <>
@@ -82,7 +82,7 @@ const Page = () => {
                   direction="row"
                   spacing={1}
                 >
-                  <ImportRack />
+                  {/* <ImportRack /> */}
                 </Stack>
               </Stack>
 
@@ -98,7 +98,23 @@ const Page = () => {
                 sm={6}
                 lg={6}
               >
-                <ImageList sx={{ width: 1000, height: 900 }} cols={3} rowHeight={164}>
+
+
+                  <ImageList variant="masonry" cols={1} gap={8}>
+                    {itemData.map((item) => (
+                      <ImageListItem key={item.img}>
+                        <img
+                          src={`${item.img}?w=248&fit=crop&auto=format`}
+                          srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                          alt={item.title}
+                          loading="lazy"
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+
+
+                {/* <ImageList sx={{ width: 1000, height: 900 }} cols={3} rowHeight={164}>
                   {itemData.map((item) => (
                     <ImageListItem key={item.img}>
                       <div>
@@ -120,7 +136,26 @@ const Page = () => {
 
                     </ImageListItem>
                   ))}
-                </ImageList>
+                </ImageList> */}
+                {/* <ImageList sx={{ width: 1000, height: 900 }} cols={3} rowHeight={164}>
+                    <ImageListItem key={'/assets/plans/wh1.png'}>
+                      <div>
+                        <canvas
+                          ref={canvasRef}
+                          width={canvWidth}
+                          height={canvHeight}
+                        />
+                        <img
+                          ref={imgRef}
+                          src={'/assets/plans/wh1.png'}
+                          srcSet={'/assets/plans/wh1.png'}
+                          alt={'Warehouse'}
+                          loading="lazy"
+                          hidden
+                        />
+                      </div>
+                    </ImageListItem>
+                </ImageList> */}
 
               </Grid>
               <Grid
