@@ -199,7 +199,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Palettes | Devias Kit
+          Pallets | Devias Kit
         </title>
       </Head>
       <Box
@@ -218,7 +218,7 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                   Palettes
+                  Pallets
                 </Typography>
               </Stack>
 

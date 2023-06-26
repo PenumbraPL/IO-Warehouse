@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+  import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import {
   Avatar,
@@ -42,7 +42,7 @@ export const ShortTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
+                {/* <TableCell padding="checkbox">
                   <Checkbox
                     checked={selectedAll}
                     indeterminate={selectedSome}
@@ -54,7 +54,7 @@ export const ShortTable = (props) => {
                       }
                     }}
                   />
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   Name
                 </TableCell>
@@ -65,17 +65,17 @@ export const ShortTable = (props) => {
                   Amount
                 </TableCell>
                 <TableCell>
-                  Expire date
+                  Expiry date
                 </TableCell>
                 <TableCell>
-                  ?
+                  Arrive date
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {items.map((customer) => {
                 const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
+                // const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
 
                 return (
                   <TableRow
@@ -83,7 +83,7 @@ export const ShortTable = (props) => {
                     key={customer.id}
                     selected={isSelected}
                   >
-                    <TableCell padding="checkbox">
+                    {/* <TableCell padding="checkbox">
                       <Checkbox
                         checked={isSelected}
                         onChange={(event) => {
@@ -94,32 +94,32 @@ export const ShortTable = (props) => {
                           }
                         }}
                       />
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
                       <Stack
                         alignItems="center"
                         direction="row"
                         spacing={2}
                       >
-                        <Avatar src={customer.avatar}>
+                        {/* <Avatar src={customer.avatar}>
                           {getInitials(customer.name)}
-                        </Avatar>
+                        </Avatar> */}
                         <Typography variant="subtitle2">
                           {customer.name}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.email}
+                      {customer.paletteId}
                     </TableCell>
                     <TableCell>
-                      {customer.address.city}, {customer.address.state}, {customer.address.country}
+                      {customer.amount}
                     </TableCell>
                     <TableCell>
-                      {customer.phone}
+                      {customer.expiryDate}
                     </TableCell>
                     <TableCell>
-                      {createdAt}
+                      {customer.arriveDate}
                     </TableCell>
                   </TableRow>
                 );
