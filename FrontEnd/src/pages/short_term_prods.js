@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
@@ -15,12 +15,12 @@ const now = new Date();
 
 async function getProductsData() {
   try {
-    const user = JSON.parse(localStorage.user)
-    const resp = await fetch('http://localhost:3001/admin/vehicles', {
+   // const user = JSON.parse(localStorage.user)
+    const resp = await fetch('http://localhost:3001/api/slotsWithNonNullExpiryDate', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          authorization: user.authorization
+        //  authorization: user.authorization
         },
     })
     return resp.json()
@@ -60,15 +60,18 @@ function signIn(e) {
   ;
 }
 
-const data = [
-  {
-    paletteId: '5e887ac47eed253091be10cb',
-    name: 'Carson Darrin',
-    amount: 13,
-    expiryDate: subDays(subHours(now, 7), 1).getTime(),
-    arriveDate: subDays(subHours(now, 7), 1).getTime(),
-  }
-];
+let data = [];
+// [
+//   {
+//     paletteId: '5e887ac47eed253091be10cb',
+//     name: 'Carson Darrin',
+//     amount: 13,
+//     expiryDate: subDays(subHours(now, 7), 1).getTime(),
+//     arriveDate: subDays(subHours(now, 7), 1).getTime(),
+//   }
+// ];
+
+
 
 const useCustomers = (page, rowsPerPage) => {
   return useMemo(
@@ -94,6 +97,15 @@ const Page = () => {
   const customers = useCustomers(page, rowsPerPage);
   const customersIds = useCustomerIds(customers);
   const customersSelection = useSelection(customersIds);
+
+
+  useEffect(() => {
+    const fun = async () => {
+      products = await getProductsData();
+      console.log(products)
+    }
+    fun();
+  });
 
   const handlePageChange = useCallback(
     (event, value) => {

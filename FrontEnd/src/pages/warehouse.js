@@ -6,7 +6,6 @@ import PaletteIcon from '@heroicons/react/24/solid/InboxStackIcon'
 import ClockIcon from '@heroicons/react/24/solid/ClockIcon'
 import { MovePopOver } from 'src/components/warehousePagePopover/move-popover';
 import { AddRack } from 'src/components/warehousePagePopover/add-rack';
-import { ImportRack } from 'src/components/warehousePagePopover/Import-rack';
 
 import {
   Box,
@@ -30,27 +29,6 @@ const itemData = [
 
 
 const Page = () => {
-
-  const canvWidth = 700;
-  const canvHeight = 500;
-  let imgRef = useRef();
-  const canvasRef = useRef();
-
-  // const drawRectangle = () => {
-  //   const context = canvasRef.current.getContext("2d");
-  //   context.drawImage(imgRef.current, 0, 0, canvWidth, canvHeight)
-
-  //   context.strokeStyle = "red";
-  //   context.lineWidth = 2;
-  //   context.strokeRect(50, 30, 110, 90);
-  //   context.strokeRect(170, 65, 100, 80);
-
-  // };
-
-
-  // useEffect(() => {
-  //   drawRectangle();
-  // }, [imgRef]);
 
   return (
     <>
@@ -82,7 +60,6 @@ const Page = () => {
                   direction="row"
                   spacing={1}
                 >
-                  {/* <ImportRack /> */}
                 </Stack>
               </Stack>
 
@@ -113,49 +90,6 @@ const Page = () => {
                     ))}
                   </ImageList>
 
-
-                {/* <ImageList sx={{ width: 1000, height: 900 }} cols={3} rowHeight={164}>
-                  {itemData.map((item) => (
-                    <ImageListItem key={item.img}>
-                      <div>
-                        <canvas
-                          ref={canvasRef}
-                          width={canvWidth}
-                          height={canvHeight}
-                        />
-                        <img
-                          ref={imgRef}
-                          src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                          srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          alt={item.title}
-                          loading="lazy"
-                          hidden
-                        />
-                      </div>
-
-
-                    </ImageListItem>
-                  ))}
-                </ImageList> */}
-                {/* <ImageList sx={{ width: 1000, height: 900 }} cols={3} rowHeight={164}>
-                    <ImageListItem key={'/assets/plans/wh1.png'}>
-                      <div>
-                        <canvas
-                          ref={canvasRef}
-                          width={canvWidth}
-                          height={canvHeight}
-                        />
-                        <img
-                          ref={imgRef}
-                          src={'/assets/plans/wh1.png'}
-                          srcSet={'/assets/plans/wh1.png'}
-                          alt={'Warehouse'}
-                          loading="lazy"
-                          hidden
-                        />
-                      </div>
-                    </ImageListItem>
-                </ImageList> */}
 
               </Grid>
               <Grid
