@@ -46,6 +46,8 @@ export function getData(rackID = 1) {
 
   }
 
+  console.log(data)
+
   if (!isLoading) {
     return (
       <TableBody >

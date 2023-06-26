@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import useFetch from "react-fetch-hook";
+import Alert from '@mui/material/Alert';
 import {
   Box,
   Card,
@@ -21,10 +23,47 @@ export const RackTable = (props) => {
     onRowsPerPageChange,
     page = 0,
     rowsPerPage = 0,
-    selected = []
+    selected = [],
+    rackID = 1
   } = props;
-  const percentage = (a, b) => (a / b) * 100;
 
+  const { isLoadingSectors, data, error } = useFetch("https://my-json-server.typicode.com/CoreNest/TestIO/sectors");
+  if (error) {
+    return (<><Alert severity="error">error kod {error.status}: {error.statusText}</Alert>
+      <Alert severity="info">no data https://my-json-server.typicode.com/CoreNest/TestIO/rack{rackID.toString()}</Alert></>)
+  }
+
+  if (!isLoadingSectors) {
+    {data?.map((sector) => {
+      // console.log(sector)
+      {sector.racks.map((rack) => {
+          return (
+            <TableRow
+              hover
+              //selected={isSelected}
+            >
+              <TableCell>
+                {sector.id}
+              </TableCell>
+              <TableCell>
+                {rack.id}
+              </TableCell>
+              <TableCell>
+
+              </TableCell>
+              <TableCell>
+
+              </TableCell>
+            </TableRow>
+          );
+        })
+      }
+      // const isSelected = selected.includes(rack.id);
+    })}
+  }
+
+  // let tableBody = getData(rackID);
+  
   return (
     <Card>
       <Scrollbar>
@@ -47,29 +86,7 @@ export const RackTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((rack) => {
-                const isSelected = selected.includes(rack.id);
-                return (
-                  <TableRow
-                    hover
-                    key={rack.id}
-                    selected={isSelected}
-                  >
-                    <TableCell>
-                      {rack.sectorId}
-                    </TableCell>
-                    <TableCell>
-                      {rack.id}
-                    </TableCell>
-                    <TableCell>
-                      {percentage(rack.occupied, rack.capacity)}%
-                    </TableCell>
-                    <TableCell>
-                      {rack.capacity}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              
             </TableBody>
           </Table>
         </Box>
@@ -87,9 +104,47 @@ export const RackTable = (props) => {
   );
 };
 
+export function getData(rackID = 1, sectorID){
+  const { isLoading, data, error } = useFetch("https://my-json-server.typicode.com/CoreNest/TestIO/rack" + rackID.toString());
+  if (error) {
+    return (<><Alert severity="error">error kod {error.status}: {error.statusText}</Alert>
+      <Alert severity="info">no data https://my-json-server.typicode.com/CoreNest/TestIO/rack{rackID.toString()}</Alert></>)
+  }
+
+  const percentage = (a, b) => (a / b) * 100;
+
+  if (!isLoading) {
+    return (
+      <TableBody>
+        {data.map((rack) => {
+          // const isSelected = selected.includes(rack.id);
+            return (
+              <TableRow
+                hover
+                key={rack.id}
+                //selected={isSelected}
+              >
+                <TableCell>
+                  {sectorID}
+                </TableCell>
+                <TableCell>
+                  {rack.id}
+                </TableCell>
+                <TableCell>
+                </TableCell>
+                <TableCell>
+                </TableCell>
+              </TableRow>
+            );
+        })}
+      </TableBody>
+    )
+  }
+}
+
 RackTable.propTypes = {
   count: PropTypes.number,
-  items: PropTypes.array,
+  data: PropTypes.array,
   onPageChange: PropTypes.func,
   onRowsPerPageChange: PropTypes.func,
   page: PropTypes.number,

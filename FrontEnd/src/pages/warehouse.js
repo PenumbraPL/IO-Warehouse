@@ -172,7 +172,7 @@ const Page = () => {
                     variant="contained"
                     href="/palettes"
                   >
-                    Palettes</Button>
+                    Pallets</Button>
 
                   <Button
                     startIcon={(
@@ -183,7 +183,7 @@ const Page = () => {
                     variant="contained"
                     href="/short_term_prods"
                   >
-                    Short Self Life Products</Button>
+                    Short Shelf Life Products</Button>
 
                 </Stack>
               </Grid>
