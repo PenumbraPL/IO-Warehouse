@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { Scrollbar } from "src/components/scrollbar";
 import { getInitials } from "src/utils/get-initials";
-import Chuj, { useGetData } from "src/components/racks";
+import Rack, { useGetData } from "src/components/racks";
 
 export const RackTable = (props) => {
   const {
@@ -68,10 +68,10 @@ export const RackTable = (props) => {
                       <TableCell>{sector.id}</TableCell>
                       <TableCell>{rack}</TableCell>
                       <TableCell>
-                        <Chuj id={rack}></Chuj>
+                        <Rack id={rack}></Rack>
                       </TableCell>
                       <TableCell>
-                        <Chuj id={rack} snoxe={true}></Chuj>
+                        <Rack id={rack} max={true}></Rack>
                       </TableCell>
                     </TableRow>
                   </TableBody>
