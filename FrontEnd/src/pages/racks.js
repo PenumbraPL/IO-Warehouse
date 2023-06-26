@@ -15,21 +15,24 @@ import { RackTable } from 'src/sections/tables/rack-table';
 const now = new Date();
 
 
-async function getRacksData() {
-  try {
-    const user = JSON.parse(localStorage.user)
-    const resp = await fetch('http://localhost:3001/racks', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: user.authorization
-        },
-    })
-    return resp.json()
-  } catch (err) {
-    console.log(err)
-  }
-}
+// async function getRacksData() {
+//   try {
+//     const user = JSON.parse(localStorage.user)
+//     const resp = await fetch('http://localhost:3001/api/racks', {
+//         method: 'GET',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           authorization: user.authorization
+//         },
+//     })
+//     if(resp.status != 200){
+//       console.log(resp)
+//     }
+//     return await resp.json()
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
 
 // let rackData = [
 //   {
@@ -74,9 +77,11 @@ const Page = () => {
   const racksSelection = useSelection(racksIds);
 
 
-  useEffect(() => {    
-    rackData = getRacksData();
-    console.log(rackData);
+  useEffect(() => {
+    const fun = async () => {
+      //rackData = await getRacksData();
+    }
+    fun();
   });
 
   const handlePageChange = useCallback(

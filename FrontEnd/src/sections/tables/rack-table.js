@@ -19,7 +19,7 @@ import Chuj, { useGetData } from "src/components/racks";
 export const RackTable = (props) => {
   const {
     count = 0,
-    items = [],
+    //items = [],
     onPageChange = () => {},
     onRowsPerPageChange,
     page = 0,
@@ -28,8 +28,12 @@ export const RackTable = (props) => {
     rackID = 1,
   } = props;
 
-  const { isLoadingSectors, data, error } = useFetch(
-    "https://my-json-server.typicode.com/CoreNest/TestIO/sectors"
+  // const { loading, data, error } = useFetch(
+  //   "https://my-json-server.typicode.com/CoreNest/TestIO/sectors"
+  // );
+
+  const { loading, data, error } = useFetch(
+    "http://localhost:3001/api/racks"
   );
 
   if (error) {
@@ -47,7 +51,8 @@ export const RackTable = (props) => {
 
   const percentage = (a, b) => (a / b) * 100;
 
-  if (!isLoadingSectors) {
+  if (!loading && data) {
+    console.log('loaded!', data, error);
     return (
       <Card>
         <Scrollbar>
@@ -61,7 +66,19 @@ export const RackTable = (props) => {
                   <TableCell>Max capacity</TableCell>
                 </TableRow>
               </TableHead>
-              {data?.map((sector) => {
+              {data?.map((item, index) => {
+                  return (
+                    <TableBody key={index}>
+                    <TableRow hover>
+                      <TableCell>{item.sectorId}</TableCell>
+                      <TableCell>{item.id}</TableCell>
+                      <TableCell> {percentage(item.occupied, item.capacity)}</TableCell>
+                      <TableCell>{item.capacity}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                  )
+              })}
+              {/* {data?.map((sector) => {
                 return sector.racks.map((rack, index) => (
                   <TableBody key={index}>
                     <TableRow hover>
@@ -76,7 +93,7 @@ export const RackTable = (props) => {
                     </TableRow>
                   </TableBody>
                 ));
-              })}
+              })} */}
             </Table>
           </Box>
         </Scrollbar>
