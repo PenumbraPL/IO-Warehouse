@@ -39,11 +39,11 @@ const data2 = [
 ];
 
 export function GetData(rackID = 1) {
-  const { isLoading, data, error } = useFetch("https://my-json-server.typicode.com/CoreNest/TestIO/rack" + rackID.toString());
+  const { isLoading, data, error } = useFetch("http://localhost:3001/api/racks" + rackID.toString());
   if (error) {
 
     return (<><Alert severity="error">error kod {error.status}: {error.statusText}</Alert>
-      <Alert severity="info">no data https://my-json-server.typicode.com/CoreNest/TestIO/rack{rackID.toString()}</Alert></>)
+      <Alert severity="info">no data http://localhost:3001/api/racks{rackID.toString()}</Alert></>)
 
   }
 

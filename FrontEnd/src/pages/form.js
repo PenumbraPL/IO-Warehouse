@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { Box, Button, Container, Select, Stack, SvgIcon, Typography } from '@mui/material';
@@ -8,14 +8,39 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 
-const Sectors = [
+let Sectors = [
   { ID: 'A', racks: [1, 12, 123] },
   { ID: 'B', racks: [1, 2, 3] },
   { ID: 'C', racks: [3, 33, 333] }
 ]
-
+async function getSectorsData() {
+  try {
+    const user = JSON.parse(localStorage.user)
+    const resp = await fetch('http://localhost:3001/api/sectors', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          //authorization: user.authorization
+        },
+    })
+    if(resp.status != 200){
+      console.log(resp)
+    }
+    return await resp.json()
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 const Page = () => {
+
+  useEffect(() => {
+    const fun = async () => {
+      Sectors = await getSectorsData();
+      console.log(Sectors)
+    }
+    fun();
+  });
 
   const [selectedSector, setSelectedSector] = useState('All');
   const [selectedRack, setSelectedRack] = useState(-1);

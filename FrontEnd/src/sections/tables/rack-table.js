@@ -33,7 +33,7 @@ export const RackTable = (props) => {
   // );
 
   const { loading, data, error } = useFetch(
-    "http://localhost:3001/api/racks"
+    "http://localhost:3001/api/racks/"+rackID.toString()
   );
 
   if (error) {
@@ -43,7 +43,7 @@ export const RackTable = (props) => {
           error kod {error.status}: {error.statusText}
         </Alert>
         <Alert severity="info">
-          no data https://my-json-server.typicode.com/CoreNest/TestIO/rack{rackID.toString()}
+          no data http://localhost:3001/api/racks{rackID.toString()}
         </Alert>
       </>
     );
