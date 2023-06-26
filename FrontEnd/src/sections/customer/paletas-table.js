@@ -38,7 +38,7 @@ const data2 = [
   }
 ];
 
-export function getData(rackID = 1) {
+export function GetData(rackID = 1) {
   const { isLoading, data, error } = useFetch("https://my-json-server.typicode.com/CoreNest/TestIO/rack" + rackID.toString());
   if (error) {
 
@@ -96,7 +96,7 @@ export const PaletasTable = (props) => {
     rackID = 1
   } = props;
 
-  let tabelaBody = getData(rackID);  
+  let tabelaBody = GetData(rackID);  
 
   return (
       <Card>
