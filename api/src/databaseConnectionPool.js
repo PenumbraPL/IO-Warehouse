@@ -11,7 +11,11 @@ class DatabaseConnectionPool {
         // gets connection info from environment variables
         // (https://www.postgresql.org/docs/current/libpq-envars.html)
         // TODO: use a config file instead
-        this.#client = new pg.Pool({ max: 5 });
+        this.#client = new pg.Pool({ max: 2 });
+
+        this.#client.on('connect', async (client) => {
+            await client.query('SET search_path TO warehouse;')
+        })
     }
 
     static #validateRack = ajv.compile({
@@ -22,7 +26,7 @@ class DatabaseConnectionPool {
             occupied: { type: 'integer' },
             sectorId: { type: 'integer' },
         },
-        required: ['capacity', 'occupied', 'sectorId'],
+        required: ['capacity', 'sectorId'],
         additionalProperties: false,
     });
 
@@ -31,9 +35,11 @@ class DatabaseConnectionPool {
             SELECT
                 ID AS "id",
                 Capacity AS "capacity",
-                Occupied AS "occupied",
+                COUNT(Position)::int AS "occupied",
                 SectorID AS "sectorId"
             FROM Racks
+            LEFT JOIN Slots ON Slots.RackID = Racks.ID
+            GROUP BY ID, Capacity, SectorID
         `)).rows;
         assert(racks.every(r => DatabaseConnectionPool.#validateRack(r)));
 
@@ -44,7 +50,6 @@ class DatabaseConnectionPool {
         const result = await this.#client.query(`
             SELECT
                 Capacity AS "capacity",
-                Occupied AS "occupied",
                 SectorID AS "sectorId"
             FROM Racks
             WHERE ID = $1
@@ -55,6 +60,11 @@ class DatabaseConnectionPool {
 
         const rack = result.rows[0];
         assert(DatabaseConnectionPool.#validateRack(rack));
+        rack.slots = (await this.#client.query(`
+            SELECT *
+            FROM Slots
+            WHERE RackID = $1
+        `, [id])).rows;
         return rack;
     }
 
@@ -64,8 +74,8 @@ class DatabaseConnectionPool {
         }
 
         return await this.#client.query(
-            'INSERT INTO Racks (Capacity, Occupied, SectorID) VALUES ($1, $2, $3);',
-            [rack.capacity, rack.occupied, rack.sectorId]
+            'INSERT INTO Racks (Capacity, SectorID) VALUES ($1, $2);',
+            [rack.capacity, rack.sectorId]
         ).then(() => true, () => false);
     }
 
@@ -151,16 +161,6 @@ class DatabaseConnectionPool {
             'UPDATE Slots SET RackId = $1, Position = $2 WHERE RackId = $3 AND Position = $4',
             [move.destinationRackID, move.destinationSlotPosition, move.sourceRackID, move.sourceSlotPosition]);
         return result.rowCount == 1;
-    }
-
-    // not intended to be used on a production database
-    async resetData() {
-        await Promise.all([
-            this.#client.query('TRUNCATE TABLE Racks, Sectors, Slots'),
-            this.#client.query('ALTER SEQUENCE racks_id_seq RESTART WITH 1'),
-            this.#client.query('ALTER SEQUENCE sectors_id_seq RESTART WITH 1'),
-            this.#client.query('ALTER SEQUENCE slots_id_seq RESTART WITH 1'),
-        ])
     }
 }
 

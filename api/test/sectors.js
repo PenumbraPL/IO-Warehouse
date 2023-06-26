@@ -1,24 +1,19 @@
 import apiRouter from '../src/api.js';
 import assert from 'assert';
-import DatabaseConnectionPool from '../src/databaseConnectionPool.js';
 import express from 'express';
 import request from 'supertest';
 import { before, beforeEach, describe, it } from 'node:test';
+import executeFromFile from '../database/populate.js';
 
 describe('sectors', async () => {
     let app;
-    before(() => {
+    before(async () => {
+        await executeFromFile('dml_sectors');
         app = express();
         app.use(apiRouter);
     });
     beforeEach(async () => {
-        let pool = new DatabaseConnectionPool();
-        await pool.resetData();
-        await pool.addSector({ 'name': 'X1' });
-        await pool.addSector({ 'name': 'X2' });
-        await pool.addRack({ 'capacity': 5, 'occupied': 2, 'sectorId': 1 });
-        await pool.addRack({ 'capacity': 7, 'occupied': 3, 'sectorId': 1 });
-        // TODO: add slots
+        await executeFromFile('dml_sectors');
     });
 
     it('get all successfully', async () => {
