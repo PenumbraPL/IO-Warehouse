@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
-import { format } from 'date-fns';
+import PropTypes from "prop-types";
+import { format } from "date-fns";
 import useFetch from "react-fetch-hook";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 import {
   Box,
   Card,
@@ -10,10 +10,11 @@ import {
   TableCell,
   TableHead,
   TablePagination,
-  TableRow
-} from '@mui/material';
-import { Scrollbar } from 'src/components/scrollbar';
-import { getInitials } from 'src/utils/get-initials';
+  TableRow,
+} from "@mui/material";
+import { Scrollbar } from "src/components/scrollbar";
+import { getInitials } from "src/utils/get-initials";
+import Chuj, { useGetData } from "src/components/racks";
 
 export const RackTable = (props) => {
   const {
@@ -24,123 +25,76 @@ export const RackTable = (props) => {
     page = 0,
     rowsPerPage = 0,
     selected = [],
-    rackID = 1
+    rackID = 1,
   } = props;
 
-  const { isLoadingSectors, data, error } = useFetch("https://my-json-server.typicode.com/CoreNest/TestIO/sectors");
-  if (error) {
-    return (<><Alert severity="error">error kod {error.status}: {error.statusText}</Alert>
-      <Alert severity="info">no data https://my-json-server.typicode.com/CoreNest/TestIO/rack{rackID.toString()}</Alert></>)
-  }
-
-  if (!isLoadingSectors) {
-    {data?.map((sector) => {
-      // console.log(sector)
-      {sector.racks.map((rack) => {
-          return (
-            <TableRow
-              hover
-              //selected={isSelected}
-            >
-              <TableCell>
-                {sector.id}
-              </TableCell>
-              <TableCell>
-                {rack.id}
-              </TableCell>
-              <TableCell>
-
-              </TableCell>
-              <TableCell>
-
-              </TableCell>
-            </TableRow>
-          );
-        })
-      }
-      // const isSelected = selected.includes(rack.id);
-    })}
-  }
-
-  // let tableBody = getData(rackID);
-  
-  return (
-    <Card>
-      <Scrollbar>
-        <Box sx={{ minWidth: 800 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  Sector ID
-                </TableCell>
-                <TableCell>
-                  Rack ID
-                </TableCell>
-                <TableCell>
-                  % of capacity
-                </TableCell>
-                <TableCell>
-                  Max capacity
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              
-            </TableBody>
-          </Table>
-        </Box>
-      </Scrollbar>
-      <TablePagination
-        component="div"
-        count={count}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onRowsPerPageChange}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
-    </Card>
+  const { isLoadingSectors, data, error } = useFetch(
+    "https://my-json-server.typicode.com/CoreNest/TestIO/sectors"
   );
-};
 
-export function getData(rackID = 1, sectorID){
-  const { isLoading, data, error } = useFetch("https://my-json-server.typicode.com/CoreNest/TestIO/rack" + rackID.toString());
   if (error) {
-    return (<><Alert severity="error">error kod {error.status}: {error.statusText}</Alert>
-      <Alert severity="info">no data https://my-json-server.typicode.com/CoreNest/TestIO/rack{rackID.toString()}</Alert></>)
+    return (
+      <>
+        <Alert severity="error">
+          error kod {error.status}: {error.statusText}
+        </Alert>
+        <Alert severity="info">
+          no data https://my-json-server.typicode.com/CoreNest/TestIO/rack{rackID.toString()}
+        </Alert>
+      </>
+    );
   }
 
   const percentage = (a, b) => (a / b) * 100;
 
-  if (!isLoading) {
+  if (!isLoadingSectors) {
     return (
-      <TableBody>
-        {data.map((rack) => {
-          // const isSelected = selected.includes(rack.id);
-            return (
-              <TableRow
-                hover
-                key={rack.id}
-                //selected={isSelected}
-              >
-                <TableCell>
-                  {sectorID}
-                </TableCell>
-                <TableCell>
-                  {rack.id}
-                </TableCell>
-                <TableCell>
-                </TableCell>
-                <TableCell>
-                </TableCell>
-              </TableRow>
-            );
-        })}
-      </TableBody>
-    )
+      <Card>
+        <Scrollbar>
+          <Box sx={{ minWidth: 800 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Sector ID</TableCell>
+                  <TableCell>Rack ID</TableCell>
+                  <TableCell>% of capacity used</TableCell>
+                  <TableCell>Max capacity</TableCell>
+                </TableRow>
+              </TableHead>
+              {data?.map((sector) => {
+                return sector.racks.map((rack, index) => (
+                  <TableBody key={index}>
+                    <TableRow hover>
+                      <TableCell>{sector.id}</TableCell>
+                      <TableCell>{rack}</TableCell>
+                      <TableCell>
+                        <Chuj id={rack}></Chuj>
+                      </TableCell>
+                      <TableCell>
+                        <Chuj id={rack} snoxe={true}></Chuj>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                ));
+              })}
+            </Table>
+          </Box>
+        </Scrollbar>
+        <TablePagination
+          component="div"
+          count={count}
+          onPageChange={onPageChange}
+          onRowsPerPageChange={onRowsPerPageChange}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[5, 10, 25]}
+        />
+      </Card>
+    );
+  } else {
+    return null; // Add a fallback or loading state here if needed
   }
-}
+};
 
 RackTable.propTypes = {
   count: PropTypes.number,
@@ -149,5 +103,5 @@ RackTable.propTypes = {
   onRowsPerPageChange: PropTypes.func,
   page: PropTypes.number,
   rowsPerPage: PropTypes.number,
-  selected: PropTypes.array
+  selected: PropTypes.array,
 };
