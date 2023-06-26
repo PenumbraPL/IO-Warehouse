@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import {add, format, subDays, subHours ,formatDistance ,compareDesc} from 'date-fns';
 import PropTypes from 'prop-types';
 import useFetch from "react-fetch-hook";
 import Alert from '@mui/material/Alert';
@@ -14,32 +15,6 @@ import {
 import { Scrollbar } from 'src/components/scrollbar';
 
 
-const data2 =
-
-  [
-    {
-      capacity: 10, // liczba wszystkich miejsc
-      slots:
-        // only slots which are occupied or reserved
-        [{
-          name: "<itemName>",
-          position: 1,
-          reserved: 1,
-
-          arriveDate: "5.10.2000",
-          expiryDate: "5.10.2020"
-        },
-        {
-          name: "<itemName2>",
-          position: 2,
-          reserved: 1,
-
-          arriveDate: "1.11.2001",
-          expiryDate: "3.3.2023"
-        }
-        ]
-    }
-  ];
 
 export function getdata(rackID = 1) {
 
@@ -77,10 +52,10 @@ export function getdata(rackID = 1) {
                   {paleta.name}
                 </TableCell>
                 <TableCell>
-                  {paleta.arriveDate}
+                  {format(paleta.arriveDate , 'dd.MM.yyyy')}
                 </TableCell>
-                <TableCell sx={{ background: paleta.expiryDate == "5.10.2020" ? "red" : "" }}>
-                  {paleta.expiryDate}
+                <TableCell sx={{ background: (compareDesc(paleta.expiryDate,new Date()))==1 ? "red" : compareDesc(paleta.expiryDate,add(new Date(),{months:2}))==1?"blue":"" }}>
+                  {format(paleta.expiryDate , 'dd.MM.yyyy')}
                 </TableCell>
               </TableRow>
             );
@@ -98,43 +73,45 @@ export const PaletasTable = (props) => {
     rackID = 1
   } = props;
 
-  let tabelaBody = getdata(rackID);  
+  let tabelaBody = getdata(rackID);
 
   return (
-    <Card>
-      <Scrollbar>
-        <Box sx={{ minWidth: 800 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  Sector
-                </TableCell>
-                <TableCell>
-                  Rack
-                </TableCell>
-                {/* <TableCell>
+      <Card>
+        <Scrollbar>
+          <Box sx={{ minWidth: 800 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    Sector
+                  </TableCell>
+                  <TableCell>
+                    Rack
+                  </TableCell>
+                  {/* <TableCell>
                   Paleta
                 </TableCell> */}
-                <TableCell>
-                  Position
-                </TableCell>
-                <TableCell>
-                  Name
-                </TableCell>
-                <TableCell>
-                  ArriveDate
-                </TableCell>
-                <TableCell>
-                  ExpiryDate
-                </TableCell>
-              </TableRow>
-            </TableHead>                
-            {tabelaBody}
-          </Table>
-        </Box>
-      </Scrollbar>
-    </Card>
+                  <TableCell>
+                    Position
+                  </TableCell>
+                  <TableCell>
+                    Name
+                  </TableCell>
+                  <TableCell>
+                    ArriveDate
+                  </TableCell>
+                  <TableCell>
+                    ExpiryDate
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              {tabelaBody}
+            </Table>
+            
+          </Box>
+        </Scrollbar>
+      </Card>
+      
   );
 };
 
