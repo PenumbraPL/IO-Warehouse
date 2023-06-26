@@ -186,6 +186,24 @@ class DatabaseConnectionPool {
         assert(DatabaseConnectionPool.#validateSlot(slot));
         return result.rows[0];
     }
+
+    async getSlotsWithNonNullExpiryDate() {
+        const result = await this.#client.query(`
+            SELECT
+                Sectors.Name AS "sectorName",
+                Racks.ID AS "rackId",
+                TO_CHAR(Slots.ExpiryDate, 'yyyy-mm-dd') AS "expiryDate",
+                Items.Name AS "itemName",
+                Items.Description AS "itemDescription"
+            FROM Sectors
+            INNER JOIN Racks ON Racks.SectorID = Sectors.ID
+            INNER JOIN Slots ON Slots.RackID = Racks.ID
+            INNER JOIN Items ON Slots.ItemID = Items.ID
+            WHERE ExpiryDate IS NOT NULL
+        `);
+        return result.rows;
+    }
+
     async addSlot(slot) {
         if (!DatabaseConnectionPool.#validateSlot(slot)) {
             return false;

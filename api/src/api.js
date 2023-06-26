@@ -122,6 +122,10 @@ router.get('/items/:id', async (request, response) => {
     response.send(item);
 });
 
+router.get('/slotsWithNonNullExpiryDate', async (request, response) => {
+    response.send(await pool.getSlotsWithNonNullExpiryDate());
+});
+
 router.post('/items', async (request, response) => {
     if (!await pool.addItem(request.body)) {
         response.status(400);
