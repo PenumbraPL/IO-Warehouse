@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
@@ -13,20 +13,40 @@ import { applyPagination } from 'src/utils/apply-pagination';
 import { RackTable } from 'src/sections/tables/rack-table';
 
 const now = new Date();
-const rackData = [
-  {
-    sectorId: 4,
-    id: 1,
-    occupied: 5,
-    capacity: 20,
-  },
-  {
-    sectorId: 4,
-    id: 2,
-    occupied: 4,
-    capacity: 20,
+
+
+async function getRacksData() {
+  try {
+    const user = JSON.parse(localStorage.user)
+    const resp = await fetch('http://localhost:3001/racks', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: user.authorization
+        },
+    })
+    return resp.json()
+  } catch (err) {
+    console.log(err)
   }
-]
+}
+
+// let rackData = [
+//   {
+//     sectorId: 4,
+//     id: 1,
+//     occupied: 5,
+//     capacity: 20,
+//   },
+//   {
+//     sectorId: 4,
+//     id: 2,
+//     occupied: 4,
+//     capacity: 20,
+//   }
+// ]
+
+let rackData = [];
 
 const useRacks = (page, rowsPerPage) => {
   return useMemo(
@@ -52,6 +72,12 @@ const Page = () => {
   const racks = useRacks(page, rowsPerPage);
   const racksIds = useRackIds(racks);
   const racksSelection = useSelection(racksIds);
+
+
+  useEffect(() => {    
+    rackData = getRacksData();
+    console.log(rackData);
+  });
 
   const handlePageChange = useCallback(
     (event, value) => {
