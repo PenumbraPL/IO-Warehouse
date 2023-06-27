@@ -13,11 +13,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { Scrollbar } from "src/components/scrollbar";
-import { getInitials } from "src/utils/get-initials";
-import Rack, { useGetData } from "src/components/racks";
-import { AddRack } from "src/components/warehousePagePopover/add-rack";
-import { DeleteRack } from "src/components/warehousePagePopover/delete-rack";
-import { Stack } from "@mui/system";
+
 
 export const RackTable = (props) => {
   const {

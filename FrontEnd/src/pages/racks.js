@@ -17,40 +17,6 @@ import { DeleteRack } from "src/components/warehousePagePopover/delete-rack";
 const now = new Date();
 
 
-// async function getRacksData() {
-//   try {
-//     const user = JSON.parse(localStorage.user)
-//     const resp = await fetch('http://localhost:3001/api/racks', {
-//         method: 'GET',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           authorization: user.authorization
-//         },
-//     })
-//     if(resp.status != 200){
-//       console.log(resp)
-//     }
-//     return await resp.json()
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
-
-// let rackData = [
-//   {
-//     sectorId: 4,
-//     id: 1,
-//     occupied: 5,
-//     capacity: 20,
-//   },
-//   {
-//     sectorId: 4,
-//     id: 2,
-//     occupied: 4,
-//     capacity: 20,
-//   }
-// ]
-
 let rackData = [];
 
 const useRacks = (page, rowsPerPage) => {
@@ -79,12 +45,7 @@ const Page = () => {
   const racksSelection = useSelection(racksIds);
 
 
-  useEffect(() => {
-    const fun = async () => {
-      //rackData = await getRacksData();
-    }
-    fun();
-  });
+  useEffect(() => {});
 
   const handlePageChange = useCallback(
     (event, value) => {

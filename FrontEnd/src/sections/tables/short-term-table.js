@@ -32,8 +32,8 @@ export const ShortTable = (props) => {
     selected = []
   } = props;
 
-  const selectedSome = (selected.length > 0) && (selected.length < items.length);
-  const selectedAll = (items.length > 0) && (selected.length === items.length);
+  // const selectedSome = (selected.length > 0) && (selected.length < items.length);
+  // const selectedAll = (items.length > 0) && (selected.length === items.length);
 
   return (
     <Card>
@@ -42,84 +42,57 @@ export const ShortTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                {/* <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAll}
-                    indeterminate={selectedSome}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        onSelectAll?.();
-                      } else {
-                        onDeselectAll?.();
-                      }
-                    }}
-                  />
-                </TableCell> */}
+
                 <TableCell>
-                  Name
+                  Sector name
                 </TableCell>
                 <TableCell>
-                  Palette Id
-                </TableCell>
-                <TableCell>
-                  Amount
+                  Rack Id
                 </TableCell>
                 <TableCell>
                   Expiry date
                 </TableCell>
                 <TableCell>
-                  Arrive date
+                  Item name
+                </TableCell>
+                <TableCell>
+                  Item description
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
-                // const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
+              {items.map((item, index) => {
+                // const isSelected = selected.includes(item.id);
 
                 return (
                   <TableRow
                     hover
-                    key={customer.id}
-                    selected={isSelected}
+                    key={index}
+                    // selected={isSelected}
                   >
-                    {/* <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            onSelectOne?.(customer.id);
-                          } else {
-                            onDeselectOne?.(customer.id);
-                          }
-                        }}
-                      />
-                    </TableCell> */}
+  
                     <TableCell>
                       <Stack
                         alignItems="center"
                         direction="row"
                         spacing={2}
                       >
-                        {/* <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
-                        </Avatar> */}
                         <Typography variant="subtitle2">
-                          {customer.name}
+                          {item.sectorName}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.paletteId}
+                      {item.rackId}
                     </TableCell>
                     <TableCell>
-                      {customer.amount}
+                      {item.expiryDate}
                     </TableCell>
                     <TableCell>
-                      {customer.expiryDate}
+                      {item.itemName}
                     </TableCell>
                     <TableCell>
-                      {customer.arriveDate}
+                      {item.itemDescription}
                     </TableCell>
                   </TableRow>
                 );

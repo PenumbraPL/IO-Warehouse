@@ -1,76 +1,18 @@
 import { useCallback, useMemo, useState, useEffect } from 'react';
 import Head from 'next/head';
-import { subDays, subHours } from 'date-fns';
-import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
-import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
-import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { ShortTable } from 'src/sections/tables/short-term-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
+import useFetch from "react-fetch-hook";
 
 const now = new Date();
 
-async function getProductsData() {
-  try {
-   // const user = JSON.parse(localStorage.user)
-    const resp = await fetch('http://localhost:3001/api/slotsWithNonNullExpiryDate', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        //  authorization: user.authorization
-        },
-    })
-    return resp.json()
-  } catch (err) {
-    console.log(err)
-  }
-}
 
-function signIn(e) {
-  e.preventDefault()
-
-  const data = {
-      email: e.target.elements.email.value,
-      password: e.target.elements.password.value,
-  }
-  
-  fetch('http://localhost:3001/admin/admin-sign-in', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-  })
-  .then((response) => {
-      status.value = response.status
-      console.log(response.status)
-      response.json()
-        .then((user) => {
-          localStorage.user = JSON.stringify({
-            workerId: user.pracownikId,
-            isAdmin: user.admin,
-            authorization: 'Basic ' + window.btoa(data.email + ":" + data.password)
-          })
-          router.push("/admin")
-        }).catch(err=>console.log(err))
-  })
-  ;
-}
 
 let data = [];
-// [
-//   {
-//     paletteId: '5e887ac47eed253091be10cb',
-//     name: 'Carson Darrin',
-//     amount: 13,
-//     expiryDate: subDays(subHours(now, 7), 1).getTime(),
-//     arriveDate: subDays(subHours(now, 7), 1).getTime(),
-//   }
-// ];
-
 
 
 const useCustomers = (page, rowsPerPage) => {
@@ -99,13 +41,18 @@ const Page = () => {
   const customersSelection = useSelection(customersIds);
 
 
-  useEffect(() => {
-    const fun = async () => {
-      products = await getProductsData();
-      console.log(products)
-    }
-    fun();
-  });
+  const { loading, data, error } = useFetch(
+    "http://localhost:3001/api/slotsWithNonNullExpiryDate"
+  );
+
+
+  // useEffect(() => {
+  //   const fun = async () => {
+  //     products = await getProductsData();
+  //     console.log(products)
+  //   }
+  //   fun();
+  // });
 
   const handlePageChange = useCallback(
     (event, value) => {
@@ -121,6 +68,8 @@ const Page = () => {
     []
   );
 
+  console.log(data)
+  if(!loading && data)
   return (
     <>
       <Head>
@@ -151,7 +100,7 @@ const Page = () => {
             </Stack>
             <ShortTable
               count={data.length}
-              items={customers}
+              items={data}
               onDeselectAll={customersSelection.handleDeselectAll}
               onDeselectOne={customersSelection.handleDeselectOne}
               onPageChange={handlePageChange}
