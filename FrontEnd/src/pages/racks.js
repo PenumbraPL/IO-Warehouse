@@ -11,6 +11,8 @@ import { CustomersTable } from 'src/sections/customer/paletas-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { RackTable } from 'src/sections/tables/rack-table';
+import { AddRack } from "src/components/warehousePagePopover/add-rack";
+import { DeleteRack } from "src/components/warehousePagePopover/delete-rack";
 
 const now = new Date();
 
@@ -126,6 +128,16 @@ const Page = () => {
               </Stack>
 
             </Stack>
+
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              spacing={1}
+            >
+              <AddRack/>
+              <DeleteRack/>
+            </Stack>
+
             <RackTable
               count={rackData.length}
               items={racks}
