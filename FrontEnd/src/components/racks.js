@@ -25,7 +25,7 @@ export const useGetData = (rackID) => {
 
 const percentage = (a, b) => (a / b) * 100;
 
-const Chuj = (props) => {
+const Rack = (props) => {
   const { isLoading, data } = useGetData(props.id);
 
   if (isLoading) {
@@ -33,10 +33,10 @@ const Chuj = (props) => {
   }
   const capacity = data[0].capacity;
   const slots = data[0].slots.length;
-  if (props.snoxe) {
+  if (props.max) {
     return <div>{capacity}</div>;
   }
   return <div>{percentage(slots, capacity)}%</div>;
 };
 
-export default Chuj;
+export default Rack;
