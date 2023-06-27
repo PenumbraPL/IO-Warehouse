@@ -35,14 +35,11 @@ import {
 //   }
 // }
 
-function sendRack(rackId, sectorId) {
-   // e.preventDefault()
-  
+function sendRack(capacity, sectorId) {
+
     const data = {
-        id: parseInt(rackId),
         sectorId: sectorId,
-        occupied: 0,
-        capacity: 10
+        capacity: parseInt(capacity)
     }
     console.log(data)
     fetch('http://localhost:3001/api/racks', {
@@ -99,11 +96,11 @@ export const AddRack = () => {
 
     const handleAdd = (event) => {
         event.preventDefault()
-        sendRack(rackId, sector);
+        sendRack(capacity, sector);
     }
 
     const [sector, setSector] = React.useState(0);
-    const [rackId, setRackId] = React.useState('');
+    const [capacity, setRackId] = React.useState('');
 
     const handleSectChange = (event) => {
         setSector(event.target.value);
@@ -172,7 +169,7 @@ export const AddRack = () => {
                         <FormControl fullWidth>
                             <TextField
                                 id="rack-id-select"
-                                label="rack-id"
+                                label="capacity"
                                 variant="filled"
                                 onChange={handleIdChange}
                             />

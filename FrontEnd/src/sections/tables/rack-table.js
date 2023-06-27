@@ -33,7 +33,7 @@ export const RackTable = (props) => {
   // );
 
   const { loading, data, error } = useFetch(
-    "http://localhost:3001/api/racks/"+rackID.toString()
+    "http://localhost:3001/api/racks"
   );
 
   if (error) {
