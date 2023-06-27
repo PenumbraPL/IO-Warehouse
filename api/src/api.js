@@ -122,6 +122,10 @@ router.get('/items/:id', async (request, response) => {
     response.send(item);
 });
 
+router.get('/slots', async (request, response) => {
+    response.send(await pool.getSlots());
+});
+
 router.get('/slotsWithNonNullExpiryDate', async (request, response) => {
     response.send(await pool.getSlotsWithNonNullExpiryDate());
 });

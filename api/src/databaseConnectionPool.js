@@ -186,6 +186,22 @@ class DatabaseConnectionPool {
         return result.rows[0];
     }
 
+    async getSlots() {
+        const result = await this.#client.query(`
+            SELECT
+                Sectors.Name AS "sectorName",
+                Racks.ID AS "rackId",
+                TO_CHAR(Slots.ExpiryDate, 'yyyy-mm-dd') AS "expiryDate",
+                Items.Name AS "itemName",
+                Items.Description AS "itemDescription"
+            FROM Sectors
+            INNER JOIN Racks ON Racks.SectorID = Sectors.ID
+            INNER JOIN Slots ON Slots.RackID = Racks.ID
+            INNER JOIN Items ON Slots.ItemID = Items.ID
+        `);
+        return result.rows;
+    }
+    
     async getSlotsWithNonNullExpiryDate() {
         const result = await this.#client.query(`
             SELECT
