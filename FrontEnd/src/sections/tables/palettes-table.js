@@ -72,27 +72,27 @@ export const PalettesTable = (props) => {
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {data.map((pallet) => {
+              {data.map((pallet, index) => {
                 return (
-                  <TableRow hover>
-                    <TableCell>
-                      <Stack
-                        alignItems="center"
-                        direction="row"
-                        spacing={2}
-                      >
-                      </Stack>
-                      {pallet.itemName}
-                    </TableCell>
-                    <TableCell>{pallet.sectorName}</TableCell>
-                    <TableCell>{pallet.rackId}</TableCell>
-                    <TableCell>{pallet.itemDescription}</TableCell>
-                    <TableCell>{pallet.expiryDate}</TableCell>
-                  </TableRow>
+                  <TableBody key={index}>
+                    <TableRow hover>
+                      <TableCell>
+                        <Stack
+                          alignItems="center"
+                          direction="row"
+                          spacing={2}
+                        >
+                        </Stack>
+                        {pallet.itemName}
+                      </TableCell>
+                      <TableCell>{pallet.sectorName}</TableCell>
+                      <TableCell>{pallet.rackId}</TableCell>
+                      <TableCell>{pallet.itemDescription}</TableCell>
+                      <TableCell>{pallet.expiryDate}</TableCell>
+                    </TableRow>
+                  </TableBody>
                 );
               })}
-            </TableBody>
           </Table>
         </Box>
       </Scrollbar>
