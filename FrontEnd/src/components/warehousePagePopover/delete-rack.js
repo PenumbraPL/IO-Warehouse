@@ -16,16 +16,11 @@ import {
 } from '@mui/material';
 
 
-function sendRack(capacity, sectorId) {
+function deleteRack(rackId) {
 
-    const data = {
-        sectorId: sectorId,
-        capacity: parseInt(capacity)
-    }
-    console.log(data)
-    fetch('http://localhost:3001/api/racks', {
-        method: 'POST',
-        body: JSON.stringify(data),
+    fetch('http://localhost:3001/api/racks/' + rackId.toString(), {
+        method: 'DELETE',
+       // body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -41,13 +36,7 @@ function sendRack(capacity, sectorId) {
 
 
 
-export const AddRack = () => {
-        
-    let sectors = [];
-
-      const { loading, data, error } = useFetch(
-        "http://localhost:3001/api/sectors/"
-      );
+export const DeleteRack = () => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -61,23 +50,18 @@ export const AddRack = () => {
         setAnchorEl(null);
     };
 
-    const handleAdd = (event) => {
+    const handleDelete = (event) => {
         event.preventDefault()
-        sendRack(capacity, sector);
+        deleteRack(rackId);
     }
 
-    const [sector, setSector] = React.useState(0);
-    const [capacity, setRackId] = React.useState('');
+    const [rackId, setRackId] = React.useState('');
 
-    const handleSectChange = (event) => {
-        setSector(event.target.value);
-    };
     const handleIdChange = (event) => {
         setRackId(event.target.value);
     };
 
-    console.log(sectors)
-    if(data && !loading)
+
     return (
         <>
             <Button
@@ -89,7 +73,7 @@ export const AddRack = () => {
                 )}
                 variant="contained"
             >
-                Add Rack
+                Delete Rack
             </Button>
 
             <Popover
@@ -99,44 +83,27 @@ export const AddRack = () => {
                 onClose={handleClose}
                 anchorOrigin={{
                     vertical: 'bottom',
-                    horizontal: 'right',
+                    horizontal: 'left',
                 }}
                 transformOrigin={{
                     vertical: 'top',
-                    horizontal: 'left',
+                    horizontal: 'right',
                 }}
             >
 
                 <Box
                     m={5}>
-                    Add rack
+                    Delete rack
 
                     <Stack
                         spacing={1}
                         mb={1}
                     >
-                        <FormControl fullWidth>
-                            <InputLabel id="sector-label">sector</InputLabel>
-                            <Select
-                                labelId="sector-label"
-                                id="sector-select"
-                                value={sector}
-                                label="sector"
-                                onChange={handleSectChange}
-                            >
-                                {data?.map((sector, index) => {
-                                    return (
-                                        <MenuItem key={index}
-    value={sector.ID}> {sector.name} </MenuItem>
-                                    );
-                                })} 
  
-                            </Select>
-                        </FormControl>
                         <FormControl fullWidth>
                             <TextField
                                 id="rack-id-select"
-                                label="capacity"
+                                label="rackID"
                                 variant="filled"
                                 onChange={handleIdChange}
                             />
@@ -146,7 +113,7 @@ export const AddRack = () => {
 
                     <Button variant="contained"
                         href="#contained-buttons"
-                        onClick={handleAdd}
+                        onClick={handleDelete}
                         >
                         Send
                     </Button>

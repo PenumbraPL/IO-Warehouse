@@ -63,7 +63,7 @@ const Page = () => {
                 </Stack>
               </Stack>
 
-              <AddRack />
+              {/* <AddRack /> */}
             </Stack>
 
             <Grid

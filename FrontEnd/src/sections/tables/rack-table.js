@@ -16,6 +16,7 @@ import { Scrollbar } from "src/components/scrollbar";
 import { getInitials } from "src/utils/get-initials";
 import Rack, { useGetData } from "src/components/racks";
 import { AddRack } from "src/components/warehousePagePopover/add-rack";
+import { DeleteRack } from "src/components/warehousePagePopover/delete-rack";
 import { Stack } from "@mui/system";
 
 export const RackTable = (props) => {
@@ -29,10 +30,6 @@ export const RackTable = (props) => {
     selected = [],
     rackID = 1,
   } = props;
-
-  // const { loading, data, error } = useFetch(
-  //   "https://my-json-server.typicode.com/CoreNest/TestIO/sectors"
-  // );
 
   const { loading, data, error } = useFetch(
     "http://localhost:3001/api/racks"
@@ -92,9 +89,8 @@ export const RackTable = (props) => {
           rowsPerPage={rowsPerPage}
           rowsPerPageOptions={[5, 10, 25]} />
       </Card>
-      <Box>
-        <AddRack/>
-      </Box></>
+
+      </>
     );
   } else {
     return null; // Add a fallback or loading state here if needed
