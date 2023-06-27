@@ -130,7 +130,7 @@ const Page = () => {
                     variant="contained"
                     href="/racks"
                   >
-                    Rack </Button>
+                    Racks </Button>
 
                   <Button
                     startIcon={(
