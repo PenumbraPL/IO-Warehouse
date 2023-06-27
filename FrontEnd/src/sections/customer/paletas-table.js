@@ -39,7 +39,7 @@ const data2 = [
 ];
 
 export function GetData(rackID = 1) {
-  const { isLoading, data, error } = useFetch("http://localhost:3001/api/racks" + rackID.toString());
+  const { isLoading, data, error } = useFetch("http://localhost:3001/api/racks/" + rackID.toString());
   if (error) {
 
     return (<><Alert severity="error">error kod {error.status}: {error.statusText}</Alert>

@@ -8,8 +8,6 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import useFetch from 'react-fetch-hook';
-import Alert from '@mui/material/Alert';
-
 
 let Sectors = [
   { ID: 'A', racks: [1, 12, 123] },
@@ -19,6 +17,13 @@ let Sectors = [
 
 
 export function GetSectorsData() {
+  useEffect(() => {
+    const fun = async () => {
+      Sectors = await getSectorsData();
+      console.log(Sectors)
+    }
+    fun();
+  });
 
   const [selectedSector, setSelectedSector] = useState('All');
   const [selectedRack, setSelectedRack] = useState(-1);
