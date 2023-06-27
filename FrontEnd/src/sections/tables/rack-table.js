@@ -15,6 +15,8 @@ import {
 import { Scrollbar } from "src/components/scrollbar";
 import { getInitials } from "src/utils/get-initials";
 import Rack, { useGetData } from "src/components/racks";
+import { AddRack } from "src/components/warehousePagePopover/add-rack";
+import { Stack } from "@mui/system";
 
 export const RackTable = (props) => {
   const {
@@ -54,7 +56,7 @@ export const RackTable = (props) => {
   if (!loading && data) {
     console.log('loaded!', data, error);
     return (
-      <Card>
+      <><Card>
         <Scrollbar>
           <Box sx={{ minWidth: 800 }}>
             <Table>
@@ -67,8 +69,8 @@ export const RackTable = (props) => {
                 </TableRow>
               </TableHead>
               {data?.map((item, index) => {
-                  return (
-                    <TableBody key={index}>
+                return (
+                  <TableBody key={index}>
                     <TableRow hover>
                       <TableCell>{item.sectorId}</TableCell>
                       <TableCell>{item.id}</TableCell>
@@ -76,24 +78,8 @@ export const RackTable = (props) => {
                       <TableCell>{item.capacity}</TableCell>
                     </TableRow>
                   </TableBody>
-                  )
+                );
               })}
-              {/* {data?.map((sector) => {
-                return sector.racks.map((rack, index) => (
-                  <TableBody key={index}>
-                    <TableRow hover>
-                      <TableCell>{sector.id}</TableCell>
-                      <TableCell>{rack}</TableCell>
-                      <TableCell>
-                        <Rack id={rack}></Rack>
-                      </TableCell>
-                      <TableCell>
-                        <Rack id={rack} max={true}></Rack>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                ));
-              })} */}
             </Table>
           </Box>
         </Scrollbar>
@@ -104,14 +90,17 @@ export const RackTable = (props) => {
           onRowsPerPageChange={onRowsPerPageChange}
           page={page}
           rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[5, 10, 25]}
-        />
+          rowsPerPageOptions={[5, 10, 25]} />
       </Card>
+      <Box>
+        <AddRack/>
+      </Box></>
     );
   } else {
     return null; // Add a fallback or loading state here if needed
   }
 };
+
 
 RackTable.propTypes = {
   count: PropTypes.number,
