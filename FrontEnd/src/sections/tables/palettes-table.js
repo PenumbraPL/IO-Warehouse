@@ -15,26 +15,39 @@ import {
   Typography
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
-import { getInitials } from 'src/utils/get-initials';
+import useFetch from "react-fetch-hook";
+import Alert from "@mui/material/Alert";
 
 export const PalettesTable = (props) => {
   const {
     count = 0,
     items = [],
-    onDeselectAll,
-    onDeselectOne,
     onPageChange = () => {},
     onRowsPerPageChange,
-    onSelectAll,
-    onSelectOne,
     page = 0,
     rowsPerPage = 0,
     selected = []
   } = props;
 
-  const selectedSome = (selected.length > 0) && (selected.length < items.length);
-  const selectedAll = (items.length > 0) && (selected.length === items.length);
+  const { loading, data, error } = useFetch(
+    "http://localhost:3001/api/slots"
+  );
 
+  if (error) {
+    return (
+      <>
+        <Alert severity="error">
+          error kod {error.status}: {error.statusText}
+        </Alert>
+        <Alert severity="info">
+          no data http://localhost:3001/api/slots
+        </Alert>
+      </>
+    );
+  }
+
+  if (!loading && data) {
+    console.log('loaded!', data);
   return (
     <Card>
       <Scrollbar>
@@ -42,85 +55,40 @@ export const PalettesTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAll}
-                    indeterminate={selectedSome}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        onSelectAll?.();
-                      } else {
-                        onDeselectAll?.();
-                      }
-                    }}
-                  />
+                <TableCell>
+                  Product Name
                 </TableCell>
                 <TableCell>
-                  ID
+                  Sector ID
                 </TableCell>
                 <TableCell>
-                  Amount
+                  Rack ID
                 </TableCell>
                 <TableCell>
-                  Rack
+                  Description
                 </TableCell>
                 <TableCell>
-                  Name of products
-                </TableCell>
-                <TableCell>
-                  ?
+                  Expiry Date
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
-
+              {data.map((pallet) => {
                 return (
-                  <TableRow
-                    hover
-                    key={customer.id}
-                    selected={isSelected}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            onSelectOne?.(customer.id);
-                          } else {
-                            onDeselectOne?.(customer.id);
-                          }
-                        }}
-                      />
-                    </TableCell>
+                  <TableRow hover>
                     <TableCell>
                       <Stack
                         alignItems="center"
                         direction="row"
                         spacing={2}
                       >
-                        <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
-                        </Avatar>
-                        <Typography variant="subtitle2">
-                          {customer.name}
-                        </Typography>
                       </Stack>
+                      {pallet.itemName}
                     </TableCell>
-                    <TableCell>
-                      {customer.email}
-                    </TableCell>
-                    <TableCell>
-                      {customer.address.city}, {customer.address.state}, {customer.address.country}
-                    </TableCell>
-                    <TableCell>
-                      {customer.phone}
-                    </TableCell>
-                    <TableCell>
-                      {createdAt}
-                    </TableCell>
+                    <TableCell>{pallet.sectorName}</TableCell>
+                    <TableCell>{pallet.rackId}</TableCell>
+                    <TableCell>{pallet.itemDescription}</TableCell>
+                    <TableCell>{pallet.expiryDate}</TableCell>
                   </TableRow>
                 );
               })}
@@ -139,17 +107,16 @@ export const PalettesTable = (props) => {
       />
     </Card>
   );
+  } else {
+    return null; // Add a fallback or loading state here if needed
+  }
 };
 
 PalettesTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
-  onDeselectAll: PropTypes.func,
-  onDeselectOne: PropTypes.func,
   onPageChange: PropTypes.func,
   onRowsPerPageChange: PropTypes.func,
-  onSelectAll: PropTypes.func,
-  onSelectOne: PropTypes.func,
   page: PropTypes.number,
   rowsPerPage: PropTypes.number,
   selected: PropTypes.array
