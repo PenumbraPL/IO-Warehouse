@@ -10,7 +10,6 @@ class DatabaseConnectionPool {
     constructor() {
         // gets connection info from environment variables
         // (https://www.postgresql.org/docs/current/libpq-envars.html)
-        // TODO: use a config file instead
         this.#client = new pg.Pool({ max: 2 });
 
         this.#client.on('connect', async (client) => {
