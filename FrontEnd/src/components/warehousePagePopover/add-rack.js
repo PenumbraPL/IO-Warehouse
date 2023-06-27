@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
+import useFetch from "react-fetch-hook";
 
 import {
     Box,
@@ -15,34 +16,35 @@ import {
 } from '@mui/material';
 
 
-async function getSectorsData() {
-  try {
-    const user = JSON.parse(localStorage.user)
-    const resp = await fetch('http://localhost:3001/api/sectors', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          //authorization: user.authorization
-        },
-    })
-    if(resp.status != 200){
-      console.log(resp)
-    }
-    return await resp.json()
-  } catch (err) {
-    console.log(err)
-  }
-}
+// async function getSectorsData() {
+//   try {
+//     const user = JSON.parse(localStorage.user)
+//     const resp = await fetch('http://localhost:3001/api/sectors', {
+//         method: 'GET',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           //authorization: user.authorization
+//         },
+//     })
+//     if(resp.status != 200){
+//       console.log(resp)
+//     }
+//     return await resp.json()
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
 
-function SendRack(e) {
-    e.preventDefault()
+function sendRack(rackId, sectorId) {
+   // e.preventDefault()
   
     const data = {
-        id: e.currentTarget.rackId,
-        sectorid:  e.currentTarget.sector,
+        id: parseInt(rackId),
+        sectorId: sectorId,
+        occupied: 0,
         capacity: 10
     }
-    
+    console.log(data)
     fetch('http://localhost:3001/api/racks', {
         method: 'POST',
         body: JSON.stringify(data),
@@ -52,6 +54,7 @@ function SendRack(e) {
     })
     .then((response) => {
         console.log(response.status)
+        console.log(response)
         response.json()
           .then(() => {}).catch(err=>console.log(err))
     })
@@ -70,15 +73,17 @@ export const AddRack = () => {
     //     },
     // ];
 
-    useEffect(() => {
-        const fun = async () => {
-          sectors = await getSectorsData();
-          console.log(sectors)
-        }
-        fun();
-      });
+    // useEffect(() => {
+    //     const fun = async () => {
+    //       sectors = await getSectorsData();
+    //       //console.log(sectors)
+    //     }
+    //     fun();
+    //   });
     
-
+      const { loading, data, error } = useFetch(
+        "http://localhost:3001/api/sectors/"
+      );
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -92,6 +97,11 @@ export const AddRack = () => {
         setAnchorEl(null);
     };
 
+    const handleAdd = (event) => {
+        event.preventDefault()
+        sendRack(rackId, sector);
+    }
+
     const [sector, setSector] = React.useState(0);
     const [rackId, setRackId] = React.useState('');
 
@@ -102,6 +112,8 @@ export const AddRack = () => {
         setRackId(event.target.value);
     };
 
+    console.log(sectors)
+    if(data && !loading)
     return (
         <>
             <Button
@@ -148,12 +160,13 @@ export const AddRack = () => {
                                 label="sector"
                                 onChange={handleSectChange}
                             >
-                                {sectors.map((sector, index) => {
+                                {data?.map((sector, index) => {
                                     return (
                                         <MenuItem key={index}
-value={sector.ID}> {sector.name} </MenuItem>
+    value={sector.ID}> {sector.name} </MenuItem>
                                     );
-                                })}
+                                })} 
+ 
                             </Select>
                         </FormControl>
                         <FormControl fullWidth>
@@ -168,7 +181,9 @@ value={sector.ID}> {sector.name} </MenuItem>
 
 
                     <Button variant="contained"
-                        href="#contained-buttons">
+                        href="#contained-buttons"
+                        onClick={handleAdd}
+                        >
                         Add
                     </Button>
                     <Button variant="contained"
