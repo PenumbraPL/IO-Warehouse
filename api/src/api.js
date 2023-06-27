@@ -65,6 +65,40 @@ router.get('/sectors/:id', async (request, response) => {
     response.send(sector);
 });
 
+router.get('/racks/:rackId/slots', async (request, response) => {
+    response.send(await pool.getSlotsByRackId(request.params.rackId));
+});
+
+router.get('/racks/:rackId/slots/:slotPosition', async (request, response) => {
+    const slot = await pool.getSlotByRackIdAndPosition(request.params.rackId, request.params.slotPosition);
+    if (!slot) {
+        response.status(404);
+        response.send(
+            { 'error': 'Could not find rack matching provided id or slot matching provided position.' }
+        );
+        return;
+    }
+
+    response.send(slot);
+});
+
+router.post('/racks/:rackId/slots/:slotPosition', async (request, response) => {
+    const slot = request.body;
+    slot.rackId = Number(request.params.rackId);
+    slot.position = Number(request.params.slotPosition);
+    if (!await pool.addSlot(slot)) {
+        response.status(400);
+    }
+    response.send();
+});
+
+router.delete('/racks/:rackId/slots/:slotPosition', async (request, response) => {
+    if (!await pool.removeSlot(request.params.rackId, request.params.slotPosition)) {
+        response.status(400);
+    }
+    response.send();
+});
+
 router.patch('/moveSlot', async (request, response) => {
     const result = await pool.moveSlot(request.body);
     if (result == null) {
@@ -86,6 +120,10 @@ router.get('/items/:id', async (request, response) => {
     }
 
     response.send(item);
+});
+
+router.get('/slotsWithNonNullExpiryDate', async (request, response) => {
+    response.send(await pool.getSlotsWithNonNullExpiryDate());
 });
 
 router.post('/items', async (request, response) => {

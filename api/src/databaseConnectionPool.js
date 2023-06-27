@@ -133,6 +133,99 @@ class DatabaseConnectionPool {
         }), this);
     }
 
+    static #validateSlot = ajv.compile({
+        type: 'object',
+        properties: {
+            rackId: { type: 'integer' },
+            position: { type: 'integer' },
+            reserved: { type: 'boolean' },
+            arrivalDate: { type: 'string', nullable: true },
+            expiryDate: { type: 'string', nullable: true },
+            itemId: { type: 'integer' },
+        },
+        required: ['reserved', 'arrivalDate', 'expiryDate', 'itemId'],
+        additionalProperties: false,
+    });
+
+    async getSlotsByRackId(rackId) {
+        const result = await this.#client.query(`
+            SELECT
+                RackID AS "rackId",
+                Position AS "position",
+                Reserved AS "reserved",
+                TO_CHAR(ArrivalDate, 'yyyy-mm-dd') AS "arrivalDate",
+                TO_CHAR(ExpiryDate, 'yyyy-mm-dd') AS "expiryDate",
+                ItemID AS "itemId"
+            FROM SLOTS
+            WHERE RackID = $1
+        `, [rackId]);
+        const slots = result.rows;
+        assert(slots.every(s => DatabaseConnectionPool.#validateSlot(s)));
+        return slots;
+    }
+
+    async getSlotByRackIdAndPosition(rackId, position) {
+        const result = await this.#client.query(`
+            SELECT
+                RackID AS "rackId",
+                Position AS "position",
+                Reserved AS "reserved",
+                TO_CHAR(ArrivalDate, 'yyyy-mm-dd') AS "arrivalDate",
+                TO_CHAR(ExpiryDate, 'yyyy-mm-dd') AS "expiryDate",
+                ItemID AS "itemId"
+            FROM SLOTS
+            WHERE RackID = $1 AND Position = $2
+        `, [rackId, position]);
+
+        if (result.rowCount == 0) {
+            return null;
+        }
+        assert.equal(result.rowCount, 1);
+
+        const slot = result.rows[0];
+        assert(DatabaseConnectionPool.#validateSlot(slot));
+        return result.rows[0];
+    }
+
+    async getSlotsWithNonNullExpiryDate() {
+        const result = await this.#client.query(`
+            SELECT
+                Sectors.Name AS "sectorName",
+                Racks.ID AS "rackId",
+                TO_CHAR(Slots.ExpiryDate, 'yyyy-mm-dd') AS "expiryDate",
+                Items.Name AS "itemName",
+                Items.Description AS "itemDescription"
+            FROM Sectors
+            INNER JOIN Racks ON Racks.SectorID = Sectors.ID
+            INNER JOIN Slots ON Slots.RackID = Racks.ID
+            INNER JOIN Items ON Slots.ItemID = Items.ID
+            WHERE ExpiryDate IS NOT NULL
+        `);
+        return result.rows;
+    }
+
+    async addSlot(slot) {
+        if (!DatabaseConnectionPool.#validateSlot(slot)) {
+            return false;
+        }
+
+        return await this.#client.query(`
+            INSERT INTO Slots
+                (RackID, Position, Reserved, ArrivalDate, ExpiryDate, ItemID)
+            VALUES
+                ($1, $2, $3, $4, $5, $6);
+        `, [slot.rackId, slot.position, slot.reserved, slot.arrivalDate, slot.expiryDate, slot.itemId])
+            .then(() => true, () => false);
+    }
+
+    async removeSlot(rackId, position) {
+        const result = await this.#client.query(
+            'DELETE FROM Slots WHERE RackID = $1 AND Position = $2',
+            [rackId, position],
+        );
+        return result.rowCount != 0;
+    }
+
     static #validateMoveSlot = ajv.compile({
         type: 'object',
         properties: {
@@ -143,7 +236,7 @@ class DatabaseConnectionPool {
         },
         required: ['sourceRackID', 'sourceSlotPosition', 'destinationRackID', 'destinationSlotPosition'],
         additionalProperties: false,
-    })
+    });
 
     async moveSlot(move) {
         if (!DatabaseConnectionPool.#validateMoveSlot(move)) {
