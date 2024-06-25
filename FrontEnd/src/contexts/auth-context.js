@@ -137,28 +137,7 @@ export const AuthProvider = (props) => {
     });
   };
 
-  const signIn = async (email, password) => {
-  //   fetch('http://localhost:3001/sign-in', { // backend address
-  //       method: 'POST',
-  //       body: JSON.stringify({email, password}),
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       }
-  //   })
-  // .then((response) => {
-  //     console.log(response.status)
-  //     response.json()
-  //       .then((user) => {
-  //         localStorage.user = JSON.stringify({ // localStorage ??? (sessionStorage)
-  //           id: user.id,
-  //           avatar: user.avatar,
-  //           name: user.name,
-  //           email: user.email,
-  //           authorization: 'Basic ' + window.btoa(email + ":" + password)
-  //         })
-  //       }).catch(err=>console.log(err))
-  // });
-    
+  const signIn = async (email, password) => {   
     if (email !== 'demo@devias.io' || password !== 'Password123!') {
       throw new Error('Please check your email and password');
     }
@@ -182,29 +161,7 @@ export const AuthProvider = (props) => {
     });
   };
 
-  const signInAdmin = async (email, password) => {
-
-  //   fetch('http://localhost:3001/admin/sign-in', { // backend address
-  //       method: 'POST',
-  //       body: JSON.stringify({email, password}),
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       }
-  //   })
-  // .then((response) => {
-  //     console.log(response.status)
-  //     response.json()
-  //       .then((user) => {
-  //         localStorage.user = JSON.stringify({ // localStorage ??? (sessionStorage)
-  //           id: user.id,
-  //           avatar: user.avatar,
-  //           name: user.name,
-  //           email: user.email,
-  //           authorization: 'Basic ' + window.btoa(email + ":" + password)
-  //         })
-  //       }).catch(err=>console.log(err))
-  // });
-    
+  const signInAdmin = async (email, password) => {   
   // authentykacja po stronie serwera
     if (email !== 'demo@devias.io' || password !== 'Password123!') {
       throw new Error('Please check your email and password');
@@ -232,27 +189,6 @@ export const AuthProvider = (props) => {
   };
 
   const signUp = async (email, name, password) => {
-    
-    // const signUpData = {
-    //     name: name,
-    //     email: email,
-    //     password: password
-    // };
-
-    // fetch('http://localhost:3001/sign-up', { // backend address
-    //   method: 'POST',
-    //   body: JSON.stringify(signUpData),
-    //   headers: {
-    //           'Content-Type': 'application/json'
-    //         }
-    //   }).then((response) => {
-    //         if (response.value === 200)
-    //           statusMessage.value = 'Sign up successful'
-    //         else
-    //           statusMessage.value = `Sign up unsuccessful - ${response.message}`
-    //         console.log(response.status)
-    //   });
-    
     throw new Error('Sign up is not implemented');
   };
 

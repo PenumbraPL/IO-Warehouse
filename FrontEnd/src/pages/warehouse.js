@@ -29,7 +29,6 @@ const itemData = [
 
 
 const Page = () => {
-
   return (
     <>
       <Head>
@@ -62,10 +61,8 @@ const Page = () => {
                 >
                 </Stack>
               </Stack>
-
               {/* <AddRack /> */}
             </Stack>
-
             <Grid
               container
               spacing={3}
@@ -75,22 +72,18 @@ const Page = () => {
                 sm={6}
                 lg={6}
               >
-
-
-                  <ImageList variant="masonry" cols={1} gap={8}>
-                    {itemData.map((item) => (
-                      <ImageListItem key={item.img}>
-                        <img
-                          src={`${item.img}?w=248&fit=crop&auto=format`}
-                          srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                          alt={item.title}
-                          loading="lazy"
-                        />
-                      </ImageListItem>
-                    ))}
-                  </ImageList>
-
-
+                <ImageList variant="masonry" cols={1} gap={8}>
+                  {itemData.map((item) => (
+                    <ImageListItem key={item.img}>
+                      <img
+                        src={`${item.img}?w=248&fit=crop&auto=format`}
+                        srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                        alt={item.title}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
               </Grid>
               <Grid
                 xs={0}
@@ -106,8 +99,8 @@ const Page = () => {
               >
                 <Stack
                   direction="column"
-                  spacing={2}>
-
+                  spacing={2}
+                >
                   <Button
                     href="/manage-item"
                     startIcon={(
@@ -117,10 +110,9 @@ const Page = () => {
                     )}
                     variant="contained"
                   >
-                    Manage Items</Button>
-
+                    Manage Items
+                  </Button>
                   <MovePopOver />
-
                   <Button
                     startIcon={(
                       <SvgIcon fontSize="small">
@@ -131,7 +123,6 @@ const Page = () => {
                     href="/racks"
                   >
                     Racks </Button>
-
                   <Button
                     startIcon={(
                       <SvgIcon fontSize="small">
@@ -142,7 +133,6 @@ const Page = () => {
                     href="/palettes"
                   >
                     Pallets</Button>
-
                   <Button
                     startIcon={(
                       <SvgIcon fontSize="small">
@@ -153,7 +143,6 @@ const Page = () => {
                     href="/short_term_prods"
                   >
                     Short Shelf Life Products</Button>
-
                 </Stack>
               </Grid>
             </Grid>

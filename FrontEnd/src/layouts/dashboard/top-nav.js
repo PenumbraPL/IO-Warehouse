@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import BellIcon from '@heroicons/react/24/solid/BellIcon';
-import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import Bars3Icon from '@heroicons/react/24/solid/Bars3Icon';
-import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
 import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
 import LockClosedIcon from '@heroicons/react/24/solid/LockClosedIcon';
 
@@ -97,8 +95,8 @@ export const TopNav = (props) => {
             </Tooltip>
             <Tooltip title="Notifications">
               <IconButton
-              onClick={notificationsPopover.handleOpen}
-              ref={notificationsPopover.anchorRef}>
+                onClick={notificationsPopover.handleOpen}
+                ref={notificationsPopover.anchorRef}>
                 <Badge
                   badgeContent={4}
                   color="success"
@@ -118,7 +116,7 @@ export const TopNav = (props) => {
                 height: 40,
                 width: 40
               }}
-              src={user ? user.avatar : "" } //"/assets/avatars/avatar-anika-visser.png"
+              src={user ? user.avatar : ""} //"/assets/avatars/avatar-anika-visser.png"
             />
           </Stack>
         </Stack>
